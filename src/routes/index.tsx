@@ -28,6 +28,7 @@ import {
   CheckCircle2,
   Maximize2,
   X,
+  Menu,
   Volume2,
   Copy,
   Check,
@@ -52,6 +53,7 @@ function TemplePage() {
   const [bellRinging, setBellRinging] = useState(false);
   const [hideHeroCard, setHideHeroCard] = useState(false);
   const [galleryFilter, setGalleryFilter] = useState<string>("all");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Pure Web Audio synthesized traditional Vedic temple bell chime
   const playTempleBell = () => {
@@ -298,96 +300,76 @@ function TemplePage() {
     },
   ];
 
+  const navLinks = [
+    { href: "#vision", label: "Vision" },
+    { href: "#gallery", label: "Gallery" },
+    { href: "#explorer", label: "Masterplan" },
+    { href: "#sanctum", label: "Deities" },
+    { href: "#milestones", label: "Chronicle" },
+    { href: "#community", label: "Seva" },
+    { href: "#location", label: "Siting" },
+  ];
+
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#1C1817] font-sans-body selection:bg-[#7A1F2D]/20 selection:text-[#7A1F2D]">
       {/* 1. TOP NOTICE RIBBON */}
-      <div className="bg-[#F3ECE2] border-b border-[#E5DACD] text-[#6E645A] px-4 py-2 text-[11px] font-mono tracking-widest uppercase">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
-          <div className="flex items-center gap-2.5 justify-center">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#C58A3E] animate-pulse shadow-sm" />
-            <span className="font-semibold text-[#1C1817]">
-              BHTCC SACRED ARCHITECTURAL JOURNAL • 110 VAGGS RD, ROSS CREEK VIC
+      <div className="bg-[#F3ECE2] border-b border-[#E5DACD] text-[#6E645A] px-3 sm:px-4 py-2 text-[10px] sm:text-[11px] font-mono tracking-wider sm:tracking-widest uppercase">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1.5 sm:gap-2 text-center md:text-left">
+          <div className="flex items-center gap-2 justify-center">
+            <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#C58A3E] animate-pulse shadow-sm shrink-0" />
+            <span className="font-semibold text-[#1C1817] truncate">
+              BHTCC SACRED ARCHITECTURAL JOURNAL • 110 VAGGS RD, ROSS CREEK
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[#7A7167]">
-            <span>GEO: 37°38'S 143°49'E</span>
-            <span>•</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[#7A7167]">
+            <span className="hidden sm:inline">GEO: 37°38'S 143°49'E</span>
+            <span className="hidden sm:inline">•</span>
             <span>ABN: 13 397 829 440</span>
             <span>•</span>
-            <span className="text-[#7A1F2D] font-bold">GOVT CAPITAL COMMITMENT: $900K+</span>
+            <span className="text-[#7A1F2D] font-bold">GOVT GRANT: $900K+</span>
           </div>
         </div>
       </div>
 
-      {/* 2. FLOATING CURVED NAVIGATION BAR */}
-      <header className="sticky top-3 z-40 px-4 sm:px-6 lg:px-8 my-2">
-        <div className="max-w-7xl mx-auto bg-white/92 backdrop-blur-xl border border-[#E8DFD3] rounded-full px-5 sm:px-8 h-20 flex items-center justify-between shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl hover:border-[#7A1F2D]/30">
-          <a href="#" className="flex items-center gap-3.5 group">
-            <div className="w-12 h-12 rounded-full bg-[#7A1F2D] border-2 border-[#D4A359]/60 flex items-center justify-center text-[#FAF8F5] shadow-md transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-              <span className="font-cinzel text-xl font-bold">ॐ</span>
+      {/* 2. ADAPTIVE RESPONSIVE NAVIGATION BAR */}
+      <header className="sticky top-2 sm:top-3 z-40 px-3 sm:px-6 lg:px-8 my-1.5 sm:my-2">
+        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-[#E8DFD3] rounded-full px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl hover:border-[#7A1F2D]/30">
+          {/* Logo & Brand Emblem */}
+          <a href="#" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#7A1F2D] border-2 border-[#D4A359]/60 flex items-center justify-center text-[#FAF8F5] shadow-md transition-all duration-300 group-hover:scale-105">
+              <span className="font-cinzel text-base sm:text-xl font-bold">ॐ</span>
             </div>
             <div>
-              <span className="block font-cinzel text-base sm:text-lg font-bold tracking-wider text-[#7A1F2D] leading-tight transition-colors group-hover:text-[#5E1521]">
+              <span className="block font-cinzel text-xs sm:text-base md:text-lg font-bold tracking-wider text-[#7A1F2D] leading-tight transition-colors group-hover:text-[#5E1521]">
                 BALLARAT HINDU TEMPLE
               </span>
-              <span className="block text-[10px] font-mono uppercase tracking-widest text-[#8C8477]">
-                & Cultural Centre • Regional Victoria
+              <span className="block text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-[#8C8477]">
+                & Cultural Centre • Victoria
               </span>
             </div>
           </a>
 
-          {/* Navigation */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#5C534B]">
-            <a
-              href="#vision"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Vision
-            </a>
-            <a
-              href="#gallery"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Gallery
-            </a>
-            <a
-              href="#explorer"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Masterplan
-            </a>
-            <a
-              href="#sanctum"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Deities
-            </a>
-            <a
-              href="#milestones"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Chronicle
-            </a>
-            <a
-              href="#community"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Seva
-            </a>
-            <a
-              href="#location"
-              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-            >
-              Siting
-            </a>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
+              >
+                {link.label}
+              </a>
+            ))}
           </nav>
 
-          <div className="flex items-center gap-2.5">
+          {/* Actions & Mobile Menu Toggle */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Chime Bell Button */}
             <button
               type="button"
               onClick={playTempleBell}
               title="Ring Temple Bell (Web Audio Chime)"
-              className={`px-4 py-2 rounded-full border transition-all duration-300 text-xs font-mono flex items-center gap-2 shadow-sm ${
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border transition-all duration-300 text-xs font-mono flex items-center gap-1.5 sm:gap-2 shadow-sm ${
                 bellRinging
                   ? "bg-[#7A1F2D] text-white border-[#7A1F2D] scale-105 shadow-md"
                   : "bg-[#F3ECE2] hover:bg-[#EAE1D4] text-[#7A1F2D] border-[#DED4C7] hover:scale-105"
@@ -397,69 +379,104 @@ function TemplePage() {
               <span className="hidden sm:inline">Ring Bell</span>
             </button>
 
+            {/* Temple Fund CTA */}
             <a
               href="#fund"
-              className="inline-flex items-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-[#FAF8F5] px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#7A1F2D]/25 hover:scale-105"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-[#FAF8F5] px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#7A1F2D]/25 hover:scale-105 shrink-0"
             >
               <Heart className="w-3.5 h-3.5 text-[#D4A359]" />
-              <span>Temple Fund</span>
+              <span className="hidden xs:inline">Fund</span>
             </a>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-full text-[#1C1817] hover:bg-[#F3ECE2] border border-[#E5DACD] transition-colors focus:outline-none"
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-[#7A1F2D]" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Dropdown Sheet */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-white/98 backdrop-blur-2xl border border-[#E8DFD3] rounded-3xl p-5 shadow-2xl transition-all animate-in fade-in slide-in-from-top-3 duration-200">
+            <div className="grid grid-cols-2 gap-2 text-xs font-mono uppercase tracking-wider">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="bg-[#FAF8F5] hover:bg-[#F3ECE2] text-[#1C1817] hover:text-[#7A1F2D] px-4 py-3 rounded-2xl border border-[#EAE1D5] flex items-center justify-between transition-colors"
+                >
+                  <span>{link.label}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#C58A3E]" />
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-[#EAE1D5] flex items-center justify-between text-xs font-mono text-[#7A7167]">
+              <span>110 Vaggs Rd, Ross Creek VIC</span>
+              <span className="text-[#7A1F2D] font-bold">ABN: 13 397 829 440</span>
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* 3. HERO VIEWPORT: BACKGROUND PICTURE IS FULLY VISIBLE & VIBRANT */}
+      {/* 3. HERO VIEWPORT: ADAPTIVE ON EVERY MOBILE & DESKTOP SCREEN */}
       <section
         id="vision"
-        className="relative min-h-[95vh] flex items-center justify-start overflow-hidden pt-6 pb-20"
+        className="relative min-h-[85vh] sm:min-h-[92vh] md:min-h-[96vh] flex items-center justify-start overflow-hidden pt-4 sm:pt-6 pb-16 sm:pb-20"
       >
-        {/* Full-Bleed Temple Background Image with Crisp 100% Opacity */}
+        {/* Full-Bleed Temple Background Image with Portrait/Landscape Framing */}
         <div
-          className="absolute inset-0 bg-cover bg-center sm:bg-[center_35%] bg-no-repeat transition-transform duration-1000 scale-100"
+          className="absolute inset-0 bg-cover bg-[center_top] sm:bg-[center_35%] bg-no-repeat transition-transform duration-1000 scale-100"
           style={{ backgroundImage: `url(${templeHeroImage})` }}
         />
 
-        {/* Minimal Non-Intrusive Vignettes: Leaves the grand temple, tower, pillars, and sky completely visible */}
+        {/* Non-Intrusive Vignettes: Leaves the Gopuram & golden sunrise completely clear */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-black/25 pointer-events-none" />
-        <div className="absolute inset-y-0 left-0 w-full lg:w-1/2 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-full lg:w-1/2 bg-gradient-to-r from-black/25 via-transparent to-transparent pointer-events-none" />
 
-        {/* Toggle to Hide Overlay & View Full Background */}
-        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-20">
+        {/* Toggle to Hide Overlay & View Background Unobstructed */}
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-8 z-20">
           <button
             type="button"
             onClick={() => setHideHeroCard(!hideHeroCard)}
-            className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#1C1817] px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider shadow-lg border border-[#E5DACD] transition-all hover:scale-105"
+            className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/95 hover:bg-white text-[#1C1817] px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider shadow-lg border border-[#E5DACD] transition-all hover:scale-105"
           >
-            {hideHeroCard ? <Eye className="w-4 h-4 text-[#7A1F2D]" /> : <EyeOff className="w-4 h-4 text-[#7A1F2D]" />}
-            <span>{hideHeroCard ? "Show Details" : "View Full Background"}</span>
+            {hideHeroCard ? <Eye className="w-3.5 h-3.5 text-[#7A1F2D]" /> : <EyeOff className="w-3.5 h-3.5 text-[#7A1F2D]" />}
+            <span>{hideHeroCard ? "Show Card" : "Full View"}</span>
           </button>
         </div>
 
-        {/* Content Container (Positioned on the Left so the Temple on the Right is 100% visible) */}
+        {/* Content Container (Adaptive Left Column) */}
         {!hideHeroCard && (
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="max-w-2xl bg-white/88 backdrop-blur-xl border border-white/80 rounded-3xl p-7 sm:p-10 shadow-2xl shadow-black/20 space-y-6 transition-all duration-300 hover:shadow-3xl">
-              <div className="inline-flex items-center gap-2 border border-[#C58A3E]/50 bg-[#FAF8F5] px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest text-[#7A1F2D]">
-                <Sparkles className="w-3.5 h-3.5 text-[#C58A3E]" />
+          <div className="relative z-10 max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 w-full">
+            <div className="max-w-2xl bg-white/90 backdrop-blur-xl border border-white/80 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl shadow-black/20 space-y-4 sm:space-y-6 transition-all duration-300">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 border border-[#C58A3E]/50 bg-[#FAF8F5] px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#7A1F2D]">
+                <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C58A3E]" />
                 <span>Vedic Vastu Masterplan • 5-Acre Sanctuary</span>
               </div>
 
-              <h1 className="font-serif-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1C1817] leading-[1.12]">
+              <h1 className="font-serif-heading text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1C1817] leading-[1.15]">
                 A Sacred Sanctuary for <br />
                 <span className="text-maroon-gradient font-cinzel">Ballarat & Regional Victoria</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-[#4A433D] leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-[#4A433D] leading-relaxed">
                 Harmonizing traditional stone temple geometry with regional Victoria's golden countryside. Establishing
                 the first Hindu temple, cultural learning academy, and community food-relief centre across 5 serene
                 acres at 110 Vaggs Rd, Ross Creek.
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+              {/* Action Buttons Responsive Layout */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
                 <a
                   href="#gallery"
-                  className="inline-flex items-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-white font-medium px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-lg shadow-[#7A1F2D]/25 hover:scale-105 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-white font-medium px-5 sm:px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-lg shadow-[#7A1F2D]/25 hover:scale-105 active:scale-95 text-center"
                 >
                   <ImageIcon className="w-4 h-4 text-[#D4A359]" />
                   <span>Explore Gallery</span>
@@ -467,7 +484,7 @@ function TemplePage() {
 
                 <a
                   href="#explorer"
-                  className="inline-flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F3ECE2] border border-[#DED4C7] text-[#1C1817] px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 bg-[#FAF8F5] hover:bg-[#F3ECE2] border border-[#DED4C7] text-[#1C1817] px-5 sm:px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 text-center"
                 >
                   <Eye className="w-4 h-4 text-[#7A1F2D]" />
                   <span>Inspect Masterplan</span>
@@ -476,30 +493,31 @@ function TemplePage() {
                 <button
                   type="button"
                   onClick={() => setLightboxImage(templeHeroImage)}
-                  className="inline-flex items-center gap-2 bg-white hover:bg-[#F5EFE6] border border-[#DED4C7] text-[#1C1817] p-3 rounded-full shadow-sm hover:scale-110 transition-transform"
+                  className="inline-flex items-center justify-center gap-2 bg-white hover:bg-[#F5EFE6] border border-[#DED4C7] text-[#1C1817] py-2.5 sm:p-3 rounded-full shadow-sm hover:scale-105 sm:hover:scale-110 transition-transform text-xs font-mono"
                   title="Fullscreen View"
                 >
                   <Maximize2 className="w-4 h-4 text-[#7A1F2D]" />
+                  <span className="sm:hidden">Fullscreen</span>
                 </button>
               </div>
 
-              {/* Specs Chips */}
-              <div className="pt-4 border-t border-[#E8DFD3] grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
-                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">5.00 Acres</span>
-                  <span className="text-[10px] text-[#736B63] font-mono">Freehold Title</span>
+              {/* Specs Chips Responsive 2x2 on Mobile, 4x1 on Tablet/Desktop */}
+              <div className="pt-3 sm:pt-4 border-t border-[#E8DFD3] grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-center">
+                <div className="bg-[#FAF8F5] p-2 sm:p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-xs sm:text-sm text-[#7A1F2D] font-serif-heading">5.00 Acres</span>
+                  <span className="text-[9px] sm:text-[10px] text-[#736B63] font-mono">Freehold Title</span>
                 </div>
-                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
-                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">$900k+</span>
-                  <span className="text-[10px] text-[#736B63] font-mono">Govt Grants</span>
+                <div className="bg-[#FAF8F5] p-2 sm:p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-xs sm:text-sm text-[#7A1F2D] font-serif-heading">$900k+</span>
+                  <span className="text-[9px] sm:text-[10px] text-[#736B63] font-mono">Govt Grants</span>
                 </div>
-                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
-                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">45 Feet</span>
-                  <span className="text-[10px] text-[#736B63] font-mono">Maha Shikhara</span>
+                <div className="bg-[#FAF8F5] p-2 sm:p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-xs sm:text-sm text-[#7A1F2D] font-serif-heading">45 Feet</span>
+                  <span className="text-[9px] sm:text-[10px] text-[#736B63] font-mono">Maha Shikhara</span>
                 </div>
-                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
-                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">800+</span>
-                  <span className="text-[10px] text-[#736B63] font-mono">Devotees</span>
+                <div className="bg-[#FAF8F5] p-2 sm:p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-xs sm:text-sm text-[#7A1F2D] font-serif-heading">800+</span>
+                  <span className="text-[9px] sm:text-[10px] text-[#736B63] font-mono">Devotees</span>
                 </div>
               </div>
             </div>
@@ -507,25 +525,25 @@ function TemplePage() {
         )}
       </section>
 
-      {/* 4. VISUAL HERITAGE GALLERY (ALL GENERATED ASSETS SHOWCASED) */}
-      <section id="gallery" className="py-20 bg-white border-y border-[#E8DFD3]">
+      {/* 4. VISUAL HERITAGE GALLERY (RESPONSIVE TOUCH & FILTER SCROLL) */}
+      <section id="gallery" className="py-14 sm:py-20 bg-white border-y border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
             <div>
               <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
                 // VISUAL HERITAGE & SANCTUARY ASSETS
               </span>
-              <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+              <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
                 Sanctuary Assets & Traditional Living Heritage
               </h2>
-              <p className="mt-2 text-sm text-[#554D46] max-w-xl">
+              <p className="mt-2 text-xs sm:text-sm text-[#554D46] max-w-xl">
                 Explore the sacred deities, traditional brass sanctum lamps, Annadhanam kitchen, and 5-acre meditation
                 gardens.
               </p>
             </div>
 
-            {/* Filter Pills with Rounded Corners */}
-            <div className="flex flex-wrap gap-2">
+            {/* Filter Pills with Horizontal Scroll on Small Phones */}
+            <div className="flex overflow-x-auto sm:flex-wrap gap-1.5 sm:gap-2 pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
               {[
                 { id: "all", label: "All Assets" },
                 { id: "architecture", label: "Architecture" },
@@ -538,7 +556,7 @@ function TemplePage() {
                   key={tab.id}
                   type="button"
                   onClick={() => setGalleryFilter(tab.id)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 ${
+                  className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 ${
                     galleryFilter === tab.id
                       ? "bg-[#7A1F2D] text-white shadow-md shadow-[#7A1F2D]/20 font-bold"
                       : "bg-[#FAF8F5] text-[#554D46] border border-[#E5DACD] hover:border-[#7A1F2D] hover:bg-white"
@@ -550,31 +568,31 @@ function TemplePage() {
             </div>
           </div>
 
-          {/* Responsive Asset Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Adaptive Asset Grid (1 col on mobile, 2 on tablet, 3 on desktop) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredGallery.map((item) => (
               <div
                 key={item.id}
                 onClick={() => setLightboxImage(item.src)}
                 className="group relative bg-[#FAF8F5] rounded-3xl border border-[#E5DACD] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#7A1F2D] transition-all duration-300 cursor-pointer flex flex-col"
               >
-                <div className="relative h-64 overflow-hidden bg-stone-100">
+                <div className="relative h-56 sm:h-64 overflow-hidden bg-stone-100">
                   <img
                     src={item.src}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-bold text-[#7A1F2D] shadow-sm">
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-bold text-[#7A1F2D] shadow-sm">
                     {item.tag}
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-3 right-3 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="w-4 h-4" />
                   </div>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-serif-heading text-xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                    <h3 className="font-serif-heading text-lg sm:text-xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
                       {item.title}
                     </h3>
                     <p className="mt-2 text-xs sm:text-sm text-[#554D46] leading-relaxed">{item.desc}</p>
@@ -592,35 +610,53 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 5. INTERACTIVE MASTERPLAN EXPLORER */}
-      <section id="explorer" className="py-20 bg-[#F5EFE6] border-b border-[#E8DFD3]">
+      {/* 5. INTERACTIVE MASTERPLAN EXPLORER (WITH MOBILE QUICK-SELECTOR) */}
+      <section id="explorer" className="py-14 sm:py-20 bg-[#F5EFE6] border-b border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4 sm:gap-6">
             <div>
               <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
                 // SPATIAL ARCHITECTURE SPECIFICATION
               </span>
-              <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+              <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
                 Deconstruct the Architectural Masterplan
               </h2>
-              <p className="mt-2 text-sm text-[#554D46] max-w-xl">
-                Click any coordinate pin on the conceptual model to inspect hand-carved stone proportions, colonnades,
-                and sacred Vastu orientations.
+              <p className="mt-2 text-xs sm:text-sm text-[#554D46] max-w-xl">
+                Tap numbered pins or select components below to inspect hand-carved stone proportions and sacred Vastu
+                orientations.
               </p>
             </div>
-            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-[#DED4C7] text-xs font-mono text-[#7A1F2D] shadow-sm">
+            <div className="hidden sm:flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-[#DED4C7] text-xs font-mono text-[#7A1F2D] shadow-sm shrink-0">
               <Layers className="w-4 h-4 text-[#C58A3E]" />
               <span>INTERACTIVE SANCTUARY MAP</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Mobile Hotspot Quick-Tabs Bar */}
+          <div className="lg:hidden flex overflow-x-auto gap-2 pb-3 mb-2 -mx-4 px-4">
+            {hotspots.map((spot) => (
+              <button
+                key={spot.id}
+                type="button"
+                onClick={() => setActiveHotspot(spot.id)}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
+                  activeHotspot === spot.id
+                    ? "bg-[#7A1F2D] text-white font-bold shadow-md shadow-[#7A1F2D]/20"
+                    : "bg-white text-[#554D46] border border-[#E5DACD]"
+                }`}
+              >
+                0{spot.id + 1} {spot.title}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             <div className="lg:col-span-8 relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl transition-all duration-300 hover:shadow-2xl">
               <div className="relative group">
                 <img
                   src={templeHeroImage}
                   alt="Ballarat Hindu Temple architectural elements analyzer"
-                  className="w-full h-[400px] sm:h-[500px] lg:h-[580px] object-cover object-center transition-transform duration-700 group-hover:scale-[1.01]"
+                  className="w-full h-[320px] sm:h-[450px] lg:h-[580px] object-cover object-center transition-transform duration-700 group-hover:scale-[1.01]"
                 />
 
                 {hotspots.map((spot) => (
@@ -632,14 +668,14 @@ function TemplePage() {
                     className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer focus:outline-none"
                     aria-label={`Inspect ${spot.title}`}
                   >
-                    <span className="relative flex h-9 w-9 items-center justify-center">
+                    <span className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center">
                       <span
                         className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
                           activeHotspot === spot.id ? "bg-[#7A1F2D]" : "bg-[#C58A3E]"
                         }`}
                       />
                       <span
-                        className={`relative inline-flex rounded-full h-8 w-8 items-center justify-center text-xs font-bold font-mono transition-all duration-300 group-hover:scale-125 shadow-lg ${
+                        className={`relative inline-flex rounded-full h-7 w-7 sm:h-8 sm:w-8 items-center justify-center text-xs font-bold font-mono transition-all duration-300 group-hover:scale-125 shadow-lg ${
                           activeHotspot === spot.id
                             ? "bg-[#7A1F2D] text-white ring-4 ring-[#7A1F2D]/30"
                             : "bg-white text-[#7A1F2D] border-2 border-[#7A1F2D]"
@@ -651,13 +687,13 @@ function TemplePage() {
                   </button>
                 ))}
 
-                <div className="absolute top-5 left-5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#E5DACD] text-[11px] font-mono text-[#7A1F2D] font-bold shadow-sm">
-                  CLICK NUMBERED PIN TO INSPECT
+                <div className="absolute top-3 left-3 sm:top-5 sm:left-5 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full border border-[#E5DACD] text-[10px] sm:text-[11px] font-mono text-[#7A1F2D] font-bold shadow-sm">
+                  TAP PIN TO INSPECT
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-white border border-[#E5DACD] rounded-3xl p-7 shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl space-y-6">
+            <div className="lg:col-span-4 bg-white border border-[#E5DACD] rounded-3xl p-5 sm:p-7 shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl space-y-5 sm:space-y-6">
               {activeHotspot !== null && (
                 <div>
                   <div className="flex items-center justify-between text-xs font-mono text-[#7A1F2D] mb-3 border-b border-[#F0E8DE] pb-2.5">
@@ -667,32 +703,32 @@ function TemplePage() {
                     </span>
                   </div>
 
-                  <h3 className="font-serif-heading text-2xl font-bold text-[#1C1817]">
+                  <h3 className="font-serif-heading text-xl sm:text-2xl font-bold text-[#1C1817]">
                     {hotspots[activeHotspot]?.title}
                   </h3>
                   <span className="block text-xs font-mono text-[#C58A3E] font-semibold mt-1">
                     {hotspots[activeHotspot]?.subtitle}
                   </span>
 
-                  <p className="mt-4 text-xs sm:text-sm text-[#554D46] leading-relaxed">
+                  <p className="mt-3.5 text-xs sm:text-sm text-[#554D46] leading-relaxed">
                     {hotspots[activeHotspot]?.description}
                   </p>
 
-                  <div className="mt-6 pt-5 border-t border-[#F0E8DE]">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#8C8477] font-bold block mb-2.5">
+                  <div className="mt-5 pt-4 border-t border-[#F0E8DE]">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#8C8477] font-bold block mb-2">
                       Architectural Parameters:
                     </span>
-                    <ul className="space-y-2.5 text-xs font-mono text-[#38322D]">
+                    <ul className="space-y-2 text-xs font-mono text-[#38322D]">
                       {hotspots[activeHotspot]?.specs.map((spec, i) => (
-                        <li key={i} className="flex items-center gap-2.5">
-                          <CheckCircle2 className="w-4 h-4 text-[#7A1F2D] shrink-0" />
+                        <li key={i} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#7A1F2D] shrink-0" />
                           <span>{spec}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="mt-6 p-4 bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl flex items-center justify-between text-xs font-mono">
+                  <div className="mt-5 p-3.5 bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl flex items-center justify-between text-xs font-mono">
                     <span className="text-[#8C8477]">Elevation:</span>
                     <span className="text-[#7A1F2D] font-bold">{hotspots[activeHotspot]?.elevation}</span>
                   </div>
@@ -703,31 +739,30 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 6. CONSECRATED DEITIES: RICH PHOTOGRAPHIC HEADERS */}
-      <section id="sanctum" className="py-20 bg-[#FAF8F5]">
+      {/* 6. CONSECRATED DEITIES (RESPONSIVE CARDS) */}
+      <section id="sanctum" className="py-14 sm:py-20 bg-[#FAF8F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
             <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
               // SANCTUM SANCTORUM (GARBHAGRIHA)
             </span>
-            <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+            <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
               Consecrated Shrines of the Ballarat Sanctuary
             </h2>
-            <p className="mt-3 text-sm text-[#554D46]">
+            <p className="mt-2 text-xs sm:text-sm text-[#554D46]">
               Consecrated shrines receiving sacred cosmic energy and hosting authentic daily aartis, archana, and holy
               festival observances.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {deities.map((deity, idx) => (
               <div
                 key={idx}
                 className="bg-white border border-[#E5DACD] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#7A1F2D] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
               >
                 <div>
-                  {/* Photo Header */}
-                  <div className="h-44 w-full overflow-hidden relative bg-stone-100">
+                  <div className="h-44 sm:h-48 w-full overflow-hidden relative bg-stone-100">
                     <img
                       src={deity.image}
                       alt={deity.name}
@@ -738,8 +773,8 @@ function TemplePage() {
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="font-serif-heading text-2xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                  <div className="p-5 sm:p-6">
+                    <h3 className="font-serif-heading text-xl sm:text-2xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
                       {deity.name}
                     </h3>
                     <span className="block text-xs font-mono text-[#8C8477] mt-0.5">{deity.title}</span>
@@ -752,7 +787,7 @@ function TemplePage() {
                   </div>
                 </div>
 
-                <div className="px-6 pb-6 pt-3 border-t border-[#F2EAE0] flex items-center justify-between text-[11px] font-mono text-[#8C8477]">
+                <div className="px-5 sm:px-6 pb-5 pt-3 border-t border-[#F2EAE0] flex items-center justify-between text-[11px] font-mono text-[#8C8477]">
                   <span>Vedic Agamic Rites</span>
                   <CheckCircle2 className="w-4 h-4 text-[#C58A3E] group-hover:scale-125 transition-transform" />
                 </div>
@@ -762,27 +797,27 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 7. HISTORICAL CHRONICLE */}
-      <section id="milestones" className="py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
+      {/* 7. HISTORICAL CHRONICLE (ADAPTIVE GRID) */}
+      <section id="milestones" className="py-14 sm:py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
             <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
               // INSTITUTIONAL CHRONICLE
             </span>
-            <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+            <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
               Decade of Grassroots Community Devotion
             </h2>
-            <p className="mt-3 text-sm text-[#554D46]">
+            <p className="mt-2 text-xs sm:text-sm text-[#554D46]">
               A journey of persistent community effort—from rented halls in 2016 to our permanent 5-acre consecrated
               grounds at Ross Creek.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {milestones.map((m, i) => (
               <div
                 key={i}
-                className="bg-white border border-[#E5DACD] rounded-3xl p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D]/50 hover:-translate-y-1.5 transition-all duration-300"
+                className="bg-white border border-[#E5DACD] rounded-3xl p-5 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D]/50 hover:-translate-y-1.5 transition-all duration-300"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs font-mono text-[#7A1F2D] mb-3">
@@ -792,13 +827,13 @@ function TemplePage() {
                     </span>
                   </div>
 
-                  <span className="font-serif-heading text-3xl font-bold text-[#7A1F2D]">{m.year}</span>
-                  <h4 className="mt-1 font-semibold text-base text-[#1C1817]">{m.title}</h4>
+                  <span className="font-serif-heading text-2xl sm:text-3xl font-bold text-[#7A1F2D]">{m.year}</span>
+                  <h4 className="mt-1 font-semibold text-sm sm:text-base text-[#1C1817]">{m.title}</h4>
 
-                  <p className="mt-3 text-xs sm:text-sm text-[#554D46] leading-relaxed">{m.body}</p>
+                  <p className="mt-2.5 text-xs sm:text-sm text-[#554D46] leading-relaxed">{m.body}</p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#F2EAE0] text-[10px] font-mono text-[#8C8477]">
+                <div className="mt-5 pt-3.5 border-t border-[#F2EAE0] text-[10px] font-mono text-[#8C8477]">
                   BALLARAT HINDU TEMPLE RECORD
                 </div>
               </div>
@@ -808,22 +843,22 @@ function TemplePage() {
       </section>
 
       {/* 8. COMMUNITY SEVA & ANNADHANAM BANANA LEAF FEAST */}
-      <section id="community" className="py-20 bg-white">
+      <section id="community" className="py-14 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-6 space-y-4 sm:space-y-6">
               <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
                 // SOCIAL WELFARE & SERVICE
               </span>
-              <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+              <h2 className="font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
                 Annadhanam Seva: Nourishing Regional Families
               </h2>
-              <p className="text-sm sm:text-base text-[#554D46] leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-[#554D46] leading-relaxed">
                 Upholding the sacred Hindu value of <em>Seva</em> (selfless service), BHTCC actively serves western
                 regional Victoria through continuous food security, language preservation, and intercultural dialogue.
               </p>
 
-              <div className="space-y-4 pt-2">
+              <div className="space-y-3 pt-2">
                 {[
                   {
                     title: "Emergency Care Packages & Food Relief",
@@ -840,12 +875,12 @@ function TemplePage() {
                 ].map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-4 p-5 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl shadow-sm hover:shadow-md hover:border-[#7A1F2D]/40 transition-all duration-300"
+                    className="flex items-start gap-3.5 p-4 sm:p-5 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl shadow-sm hover:shadow-md hover:border-[#7A1F2D]/40 transition-all duration-300"
                   >
                     <CheckCircle2 className="w-5 h-5 text-[#7A1F2D] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-sm text-[#1C1817]">{item.title}</h4>
-                      <p className="text-xs text-[#554D46] mt-1 leading-relaxed">{item.desc}</p>
+                      <h4 className="font-semibold text-xs sm:text-sm text-[#1C1817]">{item.title}</h4>
+                      <p className="text-xs text-[#554D46] mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -856,9 +891,9 @@ function TemplePage() {
             <div className="lg:col-span-6">
               <div
                 onClick={() => setLightboxImage(prasadamImage)}
-                className="bg-white border-2 border-[#C58A3E]/40 rounded-3xl p-6 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl cursor-pointer group"
+                className="bg-white border-2 border-[#C58A3E]/40 rounded-3xl p-4 sm:p-6 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl cursor-pointer group"
               >
-                <div className="h-64 rounded-2xl overflow-hidden relative mb-5">
+                <div className="h-52 sm:h-64 rounded-2xl overflow-hidden relative mb-4 sm:mb-5">
                   <img
                     src={prasadamImage}
                     alt="Annadhanam Mahaprasad Feast on fresh banana leaf"
@@ -869,8 +904,8 @@ function TemplePage() {
                   </div>
                 </div>
 
-                <p className="font-cinzel text-xl text-[#7A1F2D] font-bold mb-2">अन्नं परब्रह्म स्वरूपम्</p>
-                <p className="font-serif italic text-sm text-[#1C1817] leading-relaxed">
+                <p className="font-cinzel text-lg sm:text-xl text-[#7A1F2D] font-bold mb-1.5 sm:mb-2">अन्नं परब्रह्म स्वरूपम्</p>
+                <p className="font-serif italic text-xs sm:text-sm text-[#1C1817] leading-relaxed">
                   "Food is the supreme manifestation of the divine. Sharing sanctified meals breaks all social barriers
                   and unites our multicultural regional family."
                 </p>
@@ -884,36 +919,36 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 9. SITING & ACCESS: 110 VAGGS RD */}
-      <section id="location" className="py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
+      {/* 9. SITING & ACCESS: 110 VAGGS RD (RESPONSIVE STACK) */}
+      <section id="location" className="py-14 sm:py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
             <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
               // GEOGRAPHIC SITING & ACCESS
             </span>
-            <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+            <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
               Visiting the 5-Acre Ross Creek Sanctuary
             </h2>
-            <p className="mt-3 text-sm text-[#554D46]">
+            <p className="mt-2 text-xs sm:text-sm text-[#554D46]">
               Convenient regional access from Ballarat, Melbourne, Geelong, and western regional Victoria.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border border-[#E5DACD] rounded-3xl p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-white border border-[#E5DACD] rounded-3xl p-5 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
               <div>
-                <div className="w-11 h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-4">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-3.5">
                   <MapPin className="w-5 h-5 text-[#7A1F2D]" />
                 </div>
-                <h3 className="font-serif-heading text-xl font-bold text-[#1C1817]">Sanctuary Address</h3>
-                <p className="mt-2 text-sm text-[#554D46] leading-relaxed">
+                <h3 className="font-serif-heading text-lg sm:text-xl font-bold text-[#1C1817]">Sanctuary Address</h3>
+                <p className="mt-2 text-xs sm:text-sm text-[#554D46] leading-relaxed">
                   <strong>110 Vaggs Road</strong>
                   <br />
                   Ross Creek VIC 3351
                   <br />
                   Golden Plains Shire, Australia
                 </p>
-                <div className="mt-4 pt-4 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-1.5">
+                <div className="mt-3.5 pt-3.5 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-1">
                   <p>• 12 mins from Ballarat Railway Station</p>
                   <p>• 1 hr 20 mins from Western Melbourne</p>
                   <p>• Connected via Glenelg Highway</p>
@@ -923,61 +958,61 @@ function TemplePage() {
                 href="https://maps.google.com/?q=110+Vaggs+Rd,+Ross+Creek+VIC+3351"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 inline-flex items-center justify-center gap-2 border border-[#7A1F2D] text-[#7A1F2D] hover:bg-[#7A1F2D] hover:text-white py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 hover:scale-105"
+                className="mt-5 inline-flex items-center justify-center gap-2 border border-[#7A1F2D] text-[#7A1F2D] hover:bg-[#7A1F2D] hover:text-white py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 hover:scale-105"
               >
                 <span>Open in Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
 
-            <div className="bg-white border border-[#E5DACD] rounded-3xl p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
+            <div className="bg-white border border-[#E5DACD] rounded-3xl p-5 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
               <div>
-                <div className="w-11 h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-4">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-3.5">
                   <Clock className="w-5 h-5 text-[#7A1F2D]" />
                 </div>
-                <h3 className="font-serif-heading text-xl font-bold text-[#1C1817]">Ceremony Access</h3>
-                <p className="mt-2 text-sm text-[#554D46] leading-relaxed">
+                <h3 className="font-serif-heading text-lg sm:text-xl font-bold text-[#1C1817]">Ceremony Access</h3>
+                <p className="mt-2 text-xs sm:text-sm text-[#554D46] leading-relaxed">
                   As the site is in active Phase 1 civil development, congregational poojas occur on scheduled holy
                   tithis.
                 </p>
-                <div className="mt-4 pt-4 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-1.5">
+                <div className="mt-3.5 pt-3.5 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-1">
                   <p>• Modest and respectful attire</p>
                   <p>• Designated on-site parking</p>
                   <p>• Devotee sign-in for safety</p>
                 </div>
               </div>
-              <div className="mt-6 p-3 bg-[#FAF8F5] text-[11px] font-mono text-[#7A1F2D] rounded-2xl border border-[#E8DFD3] text-center font-bold">
+              <div className="mt-5 p-3 bg-[#FAF8F5] text-[11px] font-mono text-[#7A1F2D] rounded-2xl border border-[#E8DFD3] text-center font-bold">
                 CHECK MONTHLY BULLETIN FOR SERVICE DATES
               </div>
             </div>
 
-            <div className="bg-white border border-[#E5DACD] rounded-3xl p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
+            <div className="bg-white border border-[#E5DACD] rounded-3xl p-5 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#7A1F2D] hover:-translate-y-1.5 transition-all duration-300">
               <div>
-                <div className="w-11 h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-4">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FAF8F5] border border-[#E5DACD] flex items-center justify-center text-[#7A1F2D] mb-3.5">
                   <Mail className="w-5 h-5 text-[#7A1F2D]" />
                 </div>
-                <h3 className="font-serif-heading text-xl font-bold text-[#1C1817]">Official Contact</h3>
-                <p className="mt-2 text-sm text-[#554D46] leading-relaxed">
+                <h3 className="font-serif-heading text-lg sm:text-xl font-bold text-[#1C1817]">Official Contact</h3>
+                <p className="mt-2 text-xs sm:text-sm text-[#554D46] leading-relaxed">
                   Connect with the BHTCC Executive Management Committee for pooja bookings, seva, or membership.
                 </p>
-                <div className="mt-4 pt-4 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-2">
-                  <p className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-[#7A1F2D]" />
-                    <span>info@ballarathindutemple.org.au</span>
+                <div className="mt-3.5 pt-3.5 border-t border-[#F2EAE0] text-xs font-mono text-[#8C8477] space-y-1.5">
+                  <p className="flex items-center gap-2 truncate">
+                    <Mail className="w-3.5 h-3.5 text-[#7A1F2D] shrink-0" />
+                    <span className="truncate">info@ballarathindutemple.org.au</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-[#7A1F2D]" />
+                    <Phone className="w-3.5 h-3.5 text-[#7A1F2D] shrink-0" />
                     <span>+61 3 5300 0000</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <Building className="w-3.5 h-3.5 text-[#7A1F2D]" />
+                    <Building className="w-3.5 h-3.5 text-[#7A1F2D] shrink-0" />
                     <span>Reg: A0096238K (Victoria)</span>
                   </p>
                 </div>
               </div>
               <a
                 href="mailto:info@ballarathindutemple.org.au"
-                className="mt-6 inline-flex items-center justify-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-[#FAF8F5] py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 hover:scale-105"
+                className="mt-5 inline-flex items-center justify-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-[#FAF8F5] py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 hover:scale-105"
               >
                 <span>Email Committee</span>
               </a>
@@ -987,84 +1022,86 @@ function TemplePage() {
       </section>
 
       {/* 10. TRANSPARENT GIVING & BUILDING FUND */}
-      <section id="fund" className="py-20 bg-[#FAF8F5]">
+      <section id="fund" className="py-14 sm:py-20 bg-[#FAF8F5]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white border-2 border-[#7A1F2D]/20 rounded-3xl p-8 sm:p-12 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl hover:border-[#7A1F2D]/40 text-center">
+          <div className="bg-white border-2 border-[#7A1F2D]/20 rounded-3xl p-5 sm:p-8 md:p-12 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl hover:border-[#7A1F2D]/40 text-center">
             <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-bold">
               // SACRED BUILDING FUND (SEVA)
             </span>
-            <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+            <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#1C1817]">
               Contribute to the Temple Construction
             </h2>
-            <p className="mt-3 text-xs sm:text-sm text-[#554D46] max-w-xl mx-auto leading-relaxed">
+            <p className="mt-2 text-xs sm:text-sm text-[#554D46] max-w-xl mx-auto leading-relaxed">
               Every stone carved and native garden path paved is made possible through devotee generosity. Support the
               Ballarat Hindu Temple construction via direct bank transfer (EFT).
             </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {/* Dedication Tiers: 2-col on small phones, inline on desktop */}
+            <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-3">
               {[108, 251, 501, 1008].map((amt) => (
                 <button
                   key={amt}
                   type="button"
                   onClick={() => setDonationTier(amt)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-widest border transition-all duration-300 hover:scale-105 ${
+                  className={`px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs font-mono uppercase tracking-wider border transition-all duration-300 hover:scale-105 ${
                     donationTier === amt
                       ? "bg-[#7A1F2D] text-white border-[#7A1F2D] font-bold shadow-md shadow-[#7A1F2D]/20"
                       : "bg-[#FAF8F5] text-[#1C1817] border-[#DED4C7] hover:border-[#7A1F2D]"
                   }`}
                 >
-                  ${amt} Sacred Dedication
+                  ${amt} Dedication
                 </button>
               ))}
             </div>
 
-            <div className="mt-8 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl p-6 max-w-lg mx-auto text-left space-y-3.5 text-xs sm:text-sm font-mono shadow-inner">
-              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
+            {/* Bank Transfer Details Box with Touch-Friendly Copy Targets */}
+            <div className="mt-6 sm:mt-8 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl p-4 sm:p-6 max-w-lg mx-auto text-left space-y-3 text-xs sm:text-sm font-mono shadow-inner">
+              <div className="flex flex-col xs:flex-row justify-between xs:items-center border-b border-[#EAE1D5] pb-2 gap-1">
                 <span className="text-[#8C8477]">Account Name:</span>
-                <span className="font-semibold text-[#1C1817] text-right">Ballarat Hindu Temple Inc.</span>
+                <span className="font-semibold text-[#1C1817] text-left xs:text-right">Ballarat Hindu Temple Inc.</span>
               </div>
-              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
+              <div className="flex flex-col xs:flex-row justify-between xs:items-center border-b border-[#EAE1D5] pb-2 gap-1">
                 <span className="text-[#8C8477]">Bank:</span>
                 <span className="font-semibold text-[#1C1817]">Commonwealth Bank</span>
               </div>
 
-              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
+              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2">
                 <span className="text-[#8C8477]">BSB:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#7A1F2D] text-base">063-500</span>
+                  <span className="font-bold text-[#7A1F2D] text-sm sm:text-base">063-500</span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard("063-500", "bsb")}
-                    className="p-1.5 hover:bg-white text-[#8C8477] hover:text-[#7A1F2D] rounded-full border border-transparent hover:border-[#DED4C7] transition-all hover:scale-110"
+                    className="p-2 hover:bg-white text-[#8C8477] hover:text-[#7A1F2D] rounded-full border border-transparent hover:border-[#DED4C7] transition-all hover:scale-110 active:scale-95"
                     title="Copy BSB"
                   >
-                    {copiedBsb ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedBsb ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
+              <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2">
                 <span className="text-[#8C8477]">Account No:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#7A1F2D] text-base">1089 4231</span>
+                  <span className="font-bold text-[#7A1F2D] text-sm sm:text-base">1089 4231</span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard("10894231", "acc")}
-                    className="p-1.5 hover:bg-white text-[#8C8477] hover:text-[#7A1F2D] rounded-full border border-transparent hover:border-[#DED4C7] transition-all hover:scale-110"
+                    className="p-2 hover:bg-white text-[#8C8477] hover:text-[#7A1F2D] rounded-full border border-transparent hover:border-[#DED4C7] transition-all hover:scale-110 active:scale-95"
                     title="Copy Account Number"
                   >
-                    {copiedAcc ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedAcc ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
               <div className="flex justify-between items-center pt-1">
                 <span className="text-[#8C8477]">Reference:</span>
-                <span className="text-[#7A1F2D] font-bold italic">YourName - ${donationTier}</span>
+                <span className="text-[#7A1F2D] font-bold italic truncate max-w-[200px]">YourName - ${donationTier}</span>
               </div>
             </div>
 
-            <p className="mt-4 text-[11px] font-mono text-[#8C8477]">
+            <p className="mt-4 text-[10px] sm:text-[11px] font-mono text-[#8C8477]">
               All funds managed under strict non-profit governance (ABN: 13 397 829 440). Tax receipts issued upon email
               confirmation.
             </p>
@@ -1073,13 +1110,13 @@ function TemplePage() {
       </section>
 
       {/* 11. FREQUENTLY ASKED QUESTIONS */}
-      <section className="py-20 bg-[#F5EFE6] border-t border-[#E8DFD3]">
+      <section className="py-14 sm:py-20 bg-[#F5EFE6] border-t border-[#E8DFD3]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 sm:mb-12">
             <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
               // DEVOTEE INQUIRIES
             </span>
-            <h2 className="mt-2 font-serif-heading text-2xl sm:text-3xl font-bold text-[#1C1817]">
+            <h2 className="mt-1.5 sm:mt-2 font-serif-heading text-2xl sm:text-3xl font-bold text-[#1C1817]">
               Frequently Answered Questions
             </h2>
           </div>
@@ -1106,17 +1143,17 @@ function TemplePage() {
                 <button
                   type="button"
                   onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 font-semibold text-sm text-[#1C1817] hover:text-[#7A1F2D] transition-colors"
+                  className="w-full px-5 py-4 sm:px-6 text-left flex items-center justify-between gap-4 font-semibold text-xs sm:text-sm text-[#1C1817] hover:text-[#7A1F2D] transition-colors"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#7A1F2D] transition-transform duration-300 ${
+                    className={`w-4 h-4 text-[#7A1F2D] shrink-0 transition-transform duration-300 ${
                       activeFaq === i ? "rotate-180" : ""
                     }`}
                   />
                 </button>
                 {activeFaq === i && (
-                  <div className="px-6 pb-4 text-xs sm:text-sm text-[#554D46] leading-relaxed border-t border-[#F2EAE0] pt-3">
+                  <div className="px-5 pb-4 sm:px-6 text-xs sm:text-sm text-[#554D46] leading-relaxed border-t border-[#F2EAE0] pt-3">
                     {faq.a}
                   </div>
                 )}
@@ -1128,22 +1165,22 @@ function TemplePage() {
 
       {/* 12. FULLSCREEN LIGHTBOX MODAL */}
       {lightboxImage && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-3 sm:p-4">
           <button
             type="button"
             onClick={() => setLightboxImage(null)}
-            className="absolute top-6 right-6 text-white hover:text-[#D4A359] p-2 focus:outline-none rounded-full bg-white/10 hover:bg-white/20 transition-all hover:scale-110"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-[#D4A359] p-2.5 focus:outline-none rounded-full bg-white/10 hover:bg-white/20 transition-all hover:scale-110"
             aria-label="Close lightbox"
           >
-            <X className="w-8 h-8" />
+            <X className="w-6 h-6 sm:w-8 sm:h-8" />
           </button>
           <div className="max-w-6xl w-full">
             <img
               src={lightboxImage}
               alt="Full resolution inspection view"
-              className="w-full max-h-[85vh] object-contain rounded-3xl border border-white/20 shadow-2xl"
+              className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-2xl sm:rounded-3xl border border-white/20 shadow-2xl"
             />
-            <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-white/90 bg-black/60 px-6 py-3 rounded-full backdrop-blur-md">
+            <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono text-white/90 bg-black/60 px-4 py-2 sm:px-6 sm:py-3 rounded-full backdrop-blur-md text-center">
               <span>BALLARAT HINDU TEMPLE & CULTURAL CENTRE • ASSET INSPECTOR</span>
               <span className="text-[#D4A359] font-bold">110 VAGGS RD, ROSS CREEK VIC 3351</span>
             </div>
@@ -1152,24 +1189,24 @@ function TemplePage() {
       )}
 
       {/* 13. REVERENT FOOTER */}
-      <footer className="bg-[#1C1817] text-[#FAF8F5] pt-16 pb-12">
+      <footer className="bg-[#1C1817] text-[#FAF8F5] pt-12 sm:pt-16 pb-10 sm:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center pb-12 border-b border-white/10 max-w-2xl mx-auto">
-            <p className="font-cinzel text-lg sm:text-2xl text-[#D4A359] tracking-widest font-semibold">
+          <div className="text-center pb-8 sm:pb-12 border-b border-white/10 max-w-2xl mx-auto">
+            <p className="font-cinzel text-base sm:text-xl md:text-2xl text-[#D4A359] tracking-widest font-semibold">
               ॐ सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः ।
             </p>
-            <p className="mt-2 text-xs text-[#A89F91] italic font-serif">
+            <p className="mt-2 text-[11px] sm:text-xs text-[#A89F91] italic font-serif">
               "May all beings everywhere be peaceful, happy, and free from discord."
             </p>
           </div>
 
-          <div className="py-12 grid grid-cols-1 md:grid-cols-4 gap-8 text-xs font-mono text-[#A89F91]">
-            <div className="md:col-span-2">
+          <div className="py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-xs font-mono text-[#A89F91]">
+            <div className="sm:col-span-2">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-[#7A1F2D] text-[#D4A359] flex items-center justify-center border border-[#D4A359]/40 shadow-sm">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#7A1F2D] text-[#D4A359] flex items-center justify-center border border-[#D4A359]/40 shadow-sm shrink-0">
                   <span className="font-cinzel text-base font-bold">ॐ</span>
                 </div>
-                <span className="font-cinzel text-sm font-bold tracking-wider text-[#FAF8F5]">
+                <span className="font-cinzel text-xs sm:text-sm font-bold tracking-wider text-[#FAF8F5]">
                   BALLARAT HINDU TEMPLE & CULTURAL CENTRE
                 </span>
               </div>
@@ -1177,49 +1214,31 @@ function TemplePage() {
                 An incorporated Victorian charity (ABN: 13 397 829 440) dedicated to establishing regional Victoria's
                 first traditional Vedic stone temple, community food welfare kitchen, and cultural academy on 5 acres.
               </p>
-              <div className="mt-4 text-[11px] text-[#D4A359]">
+              <div className="mt-3 text-[11px] text-[#D4A359]">
                 110 Vaggs Rd, Ross Creek VIC 3351 | Golden Plains Shire
               </div>
             </div>
 
             <div>
-              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-3">
+              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-2.5 sm:mb-3">
                 // Quick Navigation
               </span>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <a href="#vision" className="hover:text-[#D4A359] transition-colors">
-                    The Vision
-                  </a>
-                </li>
-                <li>
-                  <a href="#gallery" className="hover:text-[#D4A359] transition-colors">
-                    Heritage Gallery
-                  </a>
-                </li>
-                <li>
-                  <a href="#explorer" className="hover:text-[#D4A359] transition-colors">
-                    Architectural Explorer
-                  </a>
-                </li>
-                <li>
-                  <a href="#sanctum" className="hover:text-[#D4A359] transition-colors">
-                    Consecrated Sanctum
-                  </a>
-                </li>
-                <li>
-                  <a href="#location" className="hover:text-[#D4A359] transition-colors">
-                    Siting & Access
-                  </a>
-                </li>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="hover:text-[#D4A359] transition-colors py-0.5 inline-block">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-3">
+              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-2.5 sm:mb-3">
                 // Governance & Fund
               </span>
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-1.5 sm:space-y-2 text-xs">
                 <li>ABN: 13 397 829 440</li>
                 <li>Victoria Reg: A0096238K</li>
                 <li>info@ballarathindutemple.org.au</li>
@@ -1233,7 +1252,7 @@ function TemplePage() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#8C8477]">
+          <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono text-[#8C8477] text-center sm:text-left">
             <p>© {new Date().getFullYear()} Ballarat Hindu Temple & Cultural Centre Inc. All rights reserved.</p>
             <p>Designed under Vedic Vastu Shastra principles for Western Regional Victoria.</p>
           </div>
