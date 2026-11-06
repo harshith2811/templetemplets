@@ -172,3 +172,17 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
+.bg-arch-grid-light {
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(122, 31, 45, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(122, 31, 45, 0.04) 1px, transparent 1px);
+}
+
+.text-maroon-gradient {
+  background: linear-gradient(135deg, #7A1F2D 0%, #B45309 50%, #5E1521 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
