@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+- Use TanStack Start file routes with a shared site shell and small reusable domain components so public BHTCC content stays consistent and page-specific.
+- Persist administrator-managed content and community submissions in Lovable Cloud with RLS; validate every privileged operation server-side against the separate user_roles table because browser route guards alone do not secure writes.
