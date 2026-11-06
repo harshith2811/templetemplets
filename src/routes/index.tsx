@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import templeHeroImage from "@/assets/bhtcc-vision-concept.jpg";
+import brassLampImage from "@/assets/temple-brass-lamp.jpg";
+import ganeshaImage from "@/assets/sanctum-ganesha.jpg";
+import shivaImage from "@/assets/sanctum-shiva.jpg";
+import templeBellImage from "@/assets/temple-bell-brass.jpg";
+import prasadamImage from "@/assets/annadhanam-prasadam.jpg";
+import vastuGardensImage from "@/assets/vastu-gardens.jpg";
 import {
   MapPin,
   Calendar,
@@ -28,6 +34,8 @@ import {
   Layers,
   Eye,
   Award,
+  EyeOff,
+  Image as ImageIcon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -36,12 +44,14 @@ export const Route = createFileRoute("/")({
 
 function TemplePage() {
   const [activeHotspot, setActiveHotspot] = useState<number | null>(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [copiedBsb, setCopiedBsb] = useState(false);
   const [copiedAcc, setCopiedAcc] = useState(false);
   const [donationTier, setDonationTier] = useState<number>(251);
   const [bellRinging, setBellRinging] = useState(false);
+  const [hideHeroCard, setHideHeroCard] = useState(false);
+  const [galleryFilter, setGalleryFilter] = useState<string>("all");
 
   // Pure Web Audio synthesized traditional Vedic temple bell chime
   const playTempleBell = () => {
@@ -52,7 +62,6 @@ function TemplePage() {
       setBellRinging(true);
       setTimeout(() => setBellRinging(false), 2400);
 
-      // Harmonious golden ratio overtones (432Hz fundamental)
       const freqs = [432, 864, 1296, 1728];
       const gains = [0.35, 0.18, 0.08, 0.04];
 
@@ -87,6 +96,68 @@ function TemplePage() {
       setTimeout(() => setCopiedAcc(false), 2000);
     }
   };
+
+  const galleryItems = [
+    {
+      id: "g1",
+      title: "Sacred Architectural Concept",
+      category: "architecture",
+      tag: "Masterplan",
+      src: templeHeroImage,
+      desc: "Vedic Vastu traditional stone shikhara & pillared mandapa under regional Victorian dawn light.",
+    },
+    {
+      id: "g2",
+      title: "Consecrated Lord Shiva Sanctum",
+      category: "deities",
+      tag: "Presiding Sanctum",
+      src: shivaImage,
+      desc: "Sacred black granite Shivalinga with fresh Bilva leaves, white jasmine, and vibhuti.",
+    },
+    {
+      id: "g3",
+      title: "Lord Ganesha Agamic Shrine",
+      category: "deities",
+      tag: "Vighnaharta",
+      src: ganeshaImage,
+      desc: "Carved granite deity in sanctum niche adorned with fragrant marigold garland and chandan.",
+    },
+    {
+      id: "g4",
+      title: "Traditional Brass Kuthu Vilakku",
+      category: "traditions",
+      tag: "Sacred Deepam",
+      src: brassLampImage,
+      desc: "Handcrafted South Indian ceremonial oil lamp glowing with pure cotton wicks for daily aarti.",
+    },
+    {
+      id: "g5",
+      title: "Ornate Vedic Temple Bell",
+      category: "traditions",
+      tag: "Ghanta",
+      src: templeBellImage,
+      desc: "Hanging bronze bell with sacred Shilpa Shastra engravings tuned to 432Hz harmonic chime.",
+    },
+    {
+      id: "g6",
+      title: "Satvik Annadhanam Mahaprasad",
+      category: "seva",
+      tag: "Free Community Kitchen",
+      src: prasadamImage,
+      desc: "Consecrated vegetarian feast on fresh banana leaf: saffron rice, dal, payasam kheer, and vada.",
+    },
+    {
+      id: "g7",
+      title: "5-Acre Vastu Meditation Gardens",
+      category: "grounds",
+      tag: "Ross Creek Sanctuary",
+      src: vastuGardensImage,
+      desc: "Landscaped Victorian eucalyptus parkland with blooming lotus reflection pond and walking trails.",
+    },
+  ];
+
+  const filteredGallery =
+    galleryFilter === "all" ? galleryItems : galleryItems.filter((item) => item.category === galleryFilter);
 
   const hotspots = [
     {
@@ -188,49 +259,49 @@ function TemplePage() {
     {
       name: "Lord Shiva",
       title: "Mahadeva & Somaskanda",
+      image: shivaImage,
       shloka: "ॐ नमः शिवाय",
       translation: "Salutations to the Auspicious, Supreme Cosmic Preserver of Inner Peace.",
       role: "Presiding Sanctum Deity",
-      color: "from-amber-500/10 to-stone-100",
     },
     {
       name: "Lord Ganesha",
       title: "Vighnaharta & Prathama",
+      image: ganeshaImage,
       shloka: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ",
       translation: "Remover of obstacles and guardian of every noble, auspicious undertaking.",
       role: "Auspicious Entrance Sanctum",
-      color: "from-orange-500/10 to-stone-100",
     },
     {
       name: "Lord Murugan",
       title: "Skanda & Karthikeya",
+      image: brassLampImage,
       shloka: "ॐ षण्मुखाय नमः",
       translation: "Embodiment of courage, righteous spiritual wisdom, and supreme clarity.",
       role: "Southern Flank Sanctum",
-      color: "from-red-500/10 to-stone-100",
     },
     {
       name: "Lord Venkateswara",
       title: "Balaji / Maha Vishnu",
+      image: templeBellImage,
       shloka: "नमो भगवते वासुदेवाय",
       translation: "The compassionate guardian who bestows grace, harmony, and prosperity.",
       role: "Western Chamber Sanctum",
-      color: "from-yellow-500/10 to-stone-100",
     },
     {
       name: "Goddess Durga",
       title: "Maha Shakti & Parvati",
+      image: vastuGardensImage,
       shloka: "सर्वमङ्गलमाङ्गल्ये शिवे सर्वार्थसाधिके",
       translation: "Divine mother granting protection, strength, and boundless compassion.",
       role: "Northern Sanctuary Chamber",
-      color: "from-rose-500/10 to-stone-100",
     },
   ];
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#1C1817] font-sans-body selection:bg-[#7A1F2D]/20 selection:text-[#7A1F2D]">
-      {/* 1. TOP NOTICE RIBBON (LIGHT & REFINED) */}
-      <div className="bg-[#F3ECE2] border-b border-[#E5DACD] text-[#6E645A] px-4 py-2.5 text-[11px] font-mono tracking-widest uppercase">
+      {/* 1. TOP NOTICE RIBBON */}
+      <div className="bg-[#F3ECE2] border-b border-[#E5DACD] text-[#6E645A] px-4 py-2 text-[11px] font-mono tracking-widest uppercase">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex items-center gap-2.5 justify-center">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#C58A3E] animate-pulse shadow-sm" />
@@ -243,15 +314,14 @@ function TemplePage() {
             <span>•</span>
             <span>ABN: 13 397 829 440</span>
             <span>•</span>
-            <span className="text-[#7A1F2D] font-bold">GOVT GRANT: $900K+</span>
+            <span className="text-[#7A1F2D] font-bold">GOVT CAPITAL COMMITMENT: $900K+</span>
           </div>
         </div>
       </div>
 
       {/* 2. FLOATING CURVED NAVIGATION BAR */}
       <header className="sticky top-3 z-40 px-4 sm:px-6 lg:px-8 my-2">
-        <div className="max-w-7xl mx-auto bg-white/90 backdrop-blur-xl border border-[#E8DFD3] rounded-full px-5 sm:px-8 h-20 flex items-center justify-between shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl hover:border-[#7A1F2D]/30">
-          {/* Logo & Emblems */}
+        <div className="max-w-7xl mx-auto bg-white/92 backdrop-blur-xl border border-[#E8DFD3] rounded-full px-5 sm:px-8 h-20 flex items-center justify-between shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl hover:border-[#7A1F2D]/30">
           <a href="#" className="flex items-center gap-3.5 group">
             <div className="w-12 h-12 rounded-full bg-[#7A1F2D] border-2 border-[#D4A359]/60 flex items-center justify-center text-[#FAF8F5] shadow-md transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
               <span className="font-cinzel text-xl font-bold">ॐ</span>
@@ -266,13 +336,19 @@ function TemplePage() {
             </div>
           </a>
 
-          {/* Desktop Navigation Links with Rounded Pill Hover */}
+          {/* Navigation */}
           <nav className="hidden lg:flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#5C534B]">
             <a
               href="#vision"
               className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
             >
               Vision
+            </a>
+            <a
+              href="#gallery"
+              className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
+            >
+              Gallery
             </a>
             <a
               href="#explorer"
@@ -306,7 +382,6 @@ function TemplePage() {
             </a>
           </nav>
 
-          {/* Action Buttons */}
           <div className="flex items-center gap-2.5">
             <button
               type="button"
@@ -333,127 +408,192 @@ function TemplePage() {
         </div>
       </header>
 
-      {/* 3. HERO VIEWPORT: LUMINOUS LIGHT THEME WITH IMAGE BACKGROUND */}
-      <section id="vision" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-10 pb-20">
-        {/* Full-Bleed Temple Background Image */}
+      {/* 3. HERO VIEWPORT: BACKGROUND PICTURE IS FULLY VISIBLE & VIBRANT */}
+      <section
+        id="vision"
+        className="relative min-h-[95vh] flex items-center justify-start overflow-hidden pt-6 pb-20"
+      >
+        {/* Full-Bleed Temple Background Image with Crisp 100% Opacity */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105 opacity-85"
+          className="absolute inset-0 bg-cover bg-center sm:bg-[center_35%] bg-no-repeat transition-transform duration-1000 scale-100"
           style={{ backgroundImage: `url(${templeHeroImage})` }}
         />
 
-        {/* Luminous Light Overlays (Atmospheric Sunlight & Ivory Sandstone) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/96 via-[#FAF8F5]/88 to-[#FAF8F5]/65" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-[#FAF8F5]/80" />
-        <div className="absolute inset-0 bg-arch-grid-light opacity-60 pointer-events-none" />
+        {/* Minimal Non-Intrusive Vignettes: Leaves the grand temple, tower, pillars, and sky completely visible */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-black/25 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-full lg:w-1/2 bg-gradient-to-r from-black/20 via-transparent to-transparent pointer-events-none" />
 
-        {/* Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Narrative Column */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 border border-[#C58A3E]/40 bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest text-[#7A1F2D] shadow-sm transition-all hover:border-[#7A1F2D] hover:scale-105">
+        {/* Toggle to Hide Overlay & View Full Background */}
+        <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-20">
+          <button
+            type="button"
+            onClick={() => setHideHeroCard(!hideHeroCard)}
+            className="inline-flex items-center gap-2 bg-white/90 hover:bg-white text-[#1C1817] px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider shadow-lg border border-[#E5DACD] transition-all hover:scale-105"
+          >
+            {hideHeroCard ? <Eye className="w-4 h-4 text-[#7A1F2D]" /> : <EyeOff className="w-4 h-4 text-[#7A1F2D]" />}
+            <span>{hideHeroCard ? "Show Details" : "View Full Background"}</span>
+          </button>
+        </div>
+
+        {/* Content Container (Positioned on the Left so the Temple on the Right is 100% visible) */}
+        {!hideHeroCard && (
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="max-w-2xl bg-white/88 backdrop-blur-xl border border-white/80 rounded-3xl p-7 sm:p-10 shadow-2xl shadow-black/20 space-y-6 transition-all duration-300 hover:shadow-3xl">
+              <div className="inline-flex items-center gap-2 border border-[#C58A3E]/50 bg-[#FAF8F5] px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest text-[#7A1F2D]">
                 <Sparkles className="w-3.5 h-3.5 text-[#C58A3E]" />
-                <span>Agamic & Shilpa Shastra Architecture • 5-Acre Sanctuary</span>
+                <span>Vedic Vastu Masterplan • 5-Acre Sanctuary</span>
               </div>
 
-              <h1 className="font-serif-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#1C1817] leading-[1.12]">
-                A Sacred Sanctuary for <br className="hidden sm:inline" />
+              <h1 className="font-serif-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1C1817] leading-[1.12]">
+                A Sacred Sanctuary for <br />
                 <span className="text-maroon-gradient font-cinzel">Ballarat & Regional Victoria</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-[#554D46] leading-relaxed max-w-2xl font-normal">
-                Harmonizing traditional Vedic stone geometry with regional Victoria's golden rural landscape.
-                Establishing the first Hindu temple, cultural academy, and community food-relief centre across 5 serene
-                acres at Ross Creek.
+              <p className="text-sm sm:text-base text-[#4A433D] leading-relaxed">
+                Harmonizing traditional stone temple geometry with regional Victoria's golden countryside. Establishing
+                the first Hindu temple, cultural learning academy, and community food-relief centre across 5 serene
+                acres at 110 Vaggs Rd, Ross Creek.
               </p>
 
-              {/* Action Buttons with Rounded Corners & Rich Hover */}
-              <div className="flex flex-wrap items-center gap-4 pt-3">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                <a
+                  href="#gallery"
+                  className="inline-flex items-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-white font-medium px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-lg shadow-[#7A1F2D]/25 hover:scale-105 active:scale-95"
+                >
+                  <ImageIcon className="w-4 h-4 text-[#D4A359]" />
+                  <span>Explore Gallery</span>
+                </a>
+
                 <a
                   href="#explorer"
-                  className="inline-flex items-center gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-white font-medium px-7 py-3.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-lg shadow-[#7A1F2D]/20 hover:shadow-xl hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-2 bg-[#FAF8F5] hover:bg-[#F3ECE2] border border-[#DED4C7] text-[#1C1817] px-6 py-3 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
                 >
-                  <Eye className="w-4 h-4 text-[#D4A359]" />
+                  <Eye className="w-4 h-4 text-[#7A1F2D]" />
                   <span>Inspect Masterplan</span>
                 </a>
 
                 <button
                   type="button"
-                  onClick={() => setLightboxOpen(true)}
-                  className="inline-flex items-center gap-2 bg-white hover:bg-[#F5EFE6] border border-[#DED4C7] text-[#1C1817] px-6 py-3.5 rounded-full text-xs font-mono uppercase tracking-widest transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95"
+                  onClick={() => setLightboxImage(templeHeroImage)}
+                  className="inline-flex items-center gap-2 bg-white hover:bg-[#F5EFE6] border border-[#DED4C7] text-[#1C1817] p-3 rounded-full shadow-sm hover:scale-110 transition-transform"
+                  title="Fullscreen View"
                 >
                   <Maximize2 className="w-4 h-4 text-[#7A1F2D]" />
-                  <span>View Concept Render</span>
                 </button>
               </div>
 
-              {/* Trust Badges Strip */}
-              <div className="pt-6 border-t border-[#E8DFD3] flex flex-wrap items-center gap-6 text-xs font-mono text-[#6E645A]">
-                <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#E5DACD] transition-transform hover:scale-105">
-                  <ShieldCheck className="w-4 h-4 text-[#7A1F2D]" />
-                  <span>ABN 13 397 829 440</span>
+              {/* Specs Chips */}
+              <div className="pt-4 border-t border-[#E8DFD3] grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">5.00 Acres</span>
+                  <span className="text-[10px] text-[#736B63] font-mono">Freehold Title</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#E5DACD] transition-transform hover:scale-105">
-                  <Landmark className="w-4 h-4 text-[#7A1F2D]" />
-                  <span>$900k+ Govt Grant Allocation</span>
+                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">$900k+</span>
+                  <span className="text-[10px] text-[#736B63] font-mono">Govt Grants</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#E5DACD] transition-transform hover:scale-105">
-                  <MapPin className="w-4 h-4 text-[#7A1F2D]" />
-                  <span>110 Vaggs Rd, Ross Creek VIC</span>
+                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">45 Feet</span>
+                  <span className="text-[10px] text-[#736B63] font-mono">Maha Shikhara</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Right Curved Floating Glass HUD Card */}
-            <div className="lg:col-span-5">
-              <div className="bg-white/85 backdrop-blur-xl border border-[#E5DACD] rounded-3xl p-7 shadow-2xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-3xl hover:border-[#7A1F2D]/40 space-y-6">
-                <div className="flex items-center justify-between border-b border-[#EFE8DD] pb-3 text-xs font-mono">
-                  <span className="text-[#7A1F2D] font-bold tracking-widest uppercase">
-                    // SANCTUARY SPECIFICATIONS
-                  </span>
-                  <span className="text-[#8C8477] bg-[#F5EFE6] px-2.5 py-1 rounded-full text-[10px]">
-                    PARAMASAYIKA MANDALA
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl p-4 transition-all duration-300 hover:bg-white hover:shadow-md hover:scale-[1.03]">
-                    <span className="text-[10px] font-mono text-[#8C8477] uppercase block">Property Extent</span>
-                    <span className="text-2xl font-bold font-serif-heading text-[#7A1F2D]">5.00 Acres</span>
-                    <span className="text-[10px] text-[#554D46] block mt-0.5">Freehold Rural Title</span>
-                  </div>
-                  <div className="bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl p-4 transition-all duration-300 hover:bg-white hover:shadow-md hover:scale-[1.03]">
-                    <span className="text-[10px] font-mono text-[#8C8477] uppercase block">Govt Grants</span>
-                    <span className="text-2xl font-bold font-serif-heading text-[#7A1F2D]">$900,000+</span>
-                    <span className="text-[10px] text-[#554D46] block mt-0.5">Victorian Parliament</span>
-                  </div>
-                  <div className="bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl p-4 transition-all duration-300 hover:bg-white hover:shadow-md hover:scale-[1.03]">
-                    <span className="text-[10px] font-mono text-[#8C8477] uppercase block">Sanctum Height</span>
-                    <span className="text-2xl font-bold font-serif-heading text-[#7A1F2D]">45 Feet</span>
-                    <span className="text-[10px] text-[#554D46] block mt-0.5">Maha Shikhara Tower</span>
-                  </div>
-                  <div className="bg-[#FAF8F5] border border-[#EAE1D5] rounded-2xl p-4 transition-all duration-300 hover:bg-white hover:shadow-md hover:scale-[1.03]">
-                    <span className="text-[10px] font-mono text-[#8C8477] uppercase block">Bhoomi Pooja</span>
-                    <span className="text-2xl font-bold font-serif-heading text-[#7A1F2D]">800+ Devotees</span>
-                    <span className="text-[10px] text-[#554D46] block mt-0.5">Groundbreaking Ceremony</span>
-                  </div>
-                </div>
-
-                <div className="bg-[#F5EFE6] border-l-4 border-[#7A1F2D] rounded-r-2xl p-4 text-xs text-[#554D46] leading-relaxed">
-                  <p className="font-mono text-[11px] text-[#7A1F2D] font-bold mb-1">
-                    CONCEPT ARCHITECTURAL RENDERING:
-                  </p>
-                  Visual representation of the sacred stone complex currently progressing through active site works at 110
-                  Vaggs Road, Ross Creek in Golden Plains Shire.
+                <div className="bg-[#FAF8F5] p-2.5 rounded-2xl border border-[#EAE1D5]">
+                  <span className="block font-bold text-sm text-[#7A1F2D] font-serif-heading">800+</span>
+                  <span className="text-[10px] text-[#736B63] font-mono">Devotees</span>
                 </div>
               </div>
             </div>
           </div>
+        )}
+      </section>
+
+      {/* 4. VISUAL HERITAGE GALLERY (ALL GENERATED ASSETS SHOWCASED) */}
+      <section id="gallery" className="py-20 bg-white border-y border-[#E8DFD3]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-widest text-[#7A1F2D] font-semibold">
+                // VISUAL HERITAGE & SANCTUARY ASSETS
+              </span>
+              <h2 className="mt-2 font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
+                Sanctuary Assets & Traditional Living Heritage
+              </h2>
+              <p className="mt-2 text-sm text-[#554D46] max-w-xl">
+                Explore the sacred deities, traditional brass sanctum lamps, Annadhanam kitchen, and 5-acre meditation
+                gardens.
+              </p>
+            </div>
+
+            {/* Filter Pills with Rounded Corners */}
+            <div className="flex flex-wrap gap-2">
+              {[
+                { id: "all", label: "All Assets" },
+                { id: "architecture", label: "Architecture" },
+                { id: "deities", label: "Sanctum Deities" },
+                { id: "traditions", label: "Traditions" },
+                { id: "seva", label: "Mahaprasad Seva" },
+                { id: "grounds", label: "5-Acre Grounds" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setGalleryFilter(tab.id)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 ${
+                    galleryFilter === tab.id
+                      ? "bg-[#7A1F2D] text-white shadow-md shadow-[#7A1F2D]/20 font-bold"
+                      : "bg-[#FAF8F5] text-[#554D46] border border-[#E5DACD] hover:border-[#7A1F2D] hover:bg-white"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Responsive Asset Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGallery.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => setLightboxImage(item.src)}
+                className="group relative bg-[#FAF8F5] rounded-3xl border border-[#E5DACD] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#7A1F2D] transition-all duration-300 cursor-pointer flex flex-col"
+              >
+                <div className="relative h-64 overflow-hidden bg-stone-100">
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-bold text-[#7A1F2D] shadow-sm">
+                    {item.tag}
+                  </div>
+                  <div className="absolute bottom-4 right-4 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Maximize2 className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-serif-heading text-xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#554D46] leading-relaxed">{item.desc}</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[#EAE1D5] flex items-center justify-between text-[11px] font-mono text-[#8C8477]">
+                    <span>BHTCC Authentic Asset</span>
+                    <span className="text-[#7A1F2D] font-bold group-hover:translate-x-1 transition-transform">
+                      View →
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 4. INTERACTIVE MASTERPLAN EXPLORER (LIGHT THEME & CURVED) */}
-      <section id="explorer" className="py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
+      {/* 5. INTERACTIVE MASTERPLAN EXPLORER */}
+      <section id="explorer" className="py-20 bg-[#F5EFE6] border-b border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
@@ -475,7 +615,6 @@ function TemplePage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Interactive Image with Positioned Hotspots & Curved Frame */}
             <div className="lg:col-span-8 relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl transition-all duration-300 hover:shadow-2xl">
               <div className="relative group">
                 <img
@@ -484,7 +623,6 @@ function TemplePage() {
                   className="w-full h-[400px] sm:h-[500px] lg:h-[580px] object-cover object-center transition-transform duration-700 group-hover:scale-[1.01]"
                 />
 
-                {/* Hotspot Markers */}
                 {hotspots.map((spot) => (
                   <button
                     key={spot.id}
@@ -519,7 +657,6 @@ function TemplePage() {
               </div>
             </div>
 
-            {/* Dynamic Element Spec Inspector Panel */}
             <div className="lg:col-span-4 bg-white border border-[#E5DACD] rounded-3xl p-7 shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl space-y-6">
               {activeHotspot !== null && (
                 <div>
@@ -566,7 +703,7 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 5. CONSECRATED DEITIES: CURVED CARDS & SMOOTH HOVER */}
+      {/* 6. CONSECRATED DEITIES: RICH PHOTOGRAPHIC HEADERS */}
       <section id="sanctum" className="py-20 bg-[#FAF8F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -577,8 +714,8 @@ function TemplePage() {
               Consecrated Shrines of the Ballarat Sanctuary
             </h2>
             <p className="mt-3 text-sm text-[#554D46]">
-              Architecturally aligned to receive sacred cosmic energies and host authentic daily aartis, archana, and
-              holy festival observances.
+              Consecrated shrines receiving sacred cosmic energy and hosting authentic daily aartis, archana, and holy
+              festival observances.
             </p>
           </div>
 
@@ -586,30 +723,36 @@ function TemplePage() {
             {deities.map((deity, idx) => (
               <div
                 key={idx}
-                className="bg-white border border-[#E5DACD] rounded-3xl p-7 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:border-[#7A1F2D] hover:-translate-y-2 transition-all duration-300 group cursor-pointer"
+                className="bg-white border border-[#E5DACD] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#7A1F2D] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4 border-b border-[#F2EAE0] pb-3">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#7A1F2D] font-bold bg-[#FAF8F5] px-2.5 py-1 rounded-full border border-[#E8DFD3]">
+                  {/* Photo Header */}
+                  <div className="h-44 w-full overflow-hidden relative bg-stone-100">
+                    <img
+                      src={deity.image}
+                      alt={deity.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono font-bold text-[#7A1F2D] shadow-sm">
                       {deity.role}
-                    </span>
-                    <span className="text-xs font-mono text-[#8C8477]">0{idx + 1}</span>
+                    </div>
                   </div>
 
-                  <h3 className="font-serif-heading text-2xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
-                    {deity.name}
-                  </h3>
-                  <span className="block text-xs font-mono text-[#8C8477] mt-0.5">{deity.title}</span>
+                  <div className="p-6">
+                    <h3 className="font-serif-heading text-2xl font-bold text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                      {deity.name}
+                    </h3>
+                    <span className="block text-xs font-mono text-[#8C8477] mt-0.5">{deity.title}</span>
 
-                  {/* Sacred Sanskrit Shloka Box */}
-                  <div className="my-5 p-4 bg-[#FAF8F5] border-l-4 border-[#7A1F2D] rounded-r-2xl text-center group-hover:bg-[#FDFBF7] transition-colors">
-                    <p className="font-serif text-sm font-bold text-[#7A1F2D]">{deity.shloka}</p>
+                    <div className="my-4 p-3 bg-[#FAF8F5] border-l-4 border-[#7A1F2D] rounded-r-2xl text-center">
+                      <p className="font-serif text-sm font-bold text-[#7A1F2D]">{deity.shloka}</p>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-[#554D46] leading-relaxed italic">{deity.translation}</p>
                   </div>
-
-                  <p className="text-xs sm:text-sm text-[#554D46] leading-relaxed italic">{deity.translation}</p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#F2EAE0] flex items-center justify-between text-[11px] font-mono text-[#8C8477]">
+                <div className="px-6 pb-6 pt-3 border-t border-[#F2EAE0] flex items-center justify-between text-[11px] font-mono text-[#8C8477]">
                   <span>Vedic Agamic Rites</span>
                   <CheckCircle2 className="w-4 h-4 text-[#C58A3E] group-hover:scale-125 transition-transform" />
                 </div>
@@ -619,7 +762,7 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 6. HISTORICAL CHRONICLE (LIGHT CURVED CARDS) */}
+      {/* 7. HISTORICAL CHRONICLE */}
       <section id="milestones" className="py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -664,8 +807,8 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 7. COMMUNITY SEVA & REGIONAL WELFARE */}
-      <section id="community" className="py-20 bg-[#FAF8F5]">
+      {/* 8. COMMUNITY SEVA & ANNADHANAM BANANA LEAF FEAST */}
+      <section id="community" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
@@ -673,7 +816,7 @@ function TemplePage() {
                 // SOCIAL WELFARE & SERVICE
               </span>
               <h2 className="font-serif-heading text-3xl sm:text-4xl font-bold text-[#1C1817]">
-                Living Service: Food Drives & Regional Care
+                Annadhanam Seva: Nourishing Regional Families
               </h2>
               <p className="text-sm sm:text-base text-[#554D46] leading-relaxed">
                 Upholding the sacred Hindu value of <em>Seva</em> (selfless service), BHTCC actively serves western
@@ -697,7 +840,7 @@ function TemplePage() {
                 ].map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-4 p-5 bg-white border border-[#E5DACD] rounded-2xl shadow-sm hover:shadow-md hover:border-[#7A1F2D]/40 transition-all duration-300"
+                    className="flex items-start gap-4 p-5 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl shadow-sm hover:shadow-md hover:border-[#7A1F2D]/40 transition-all duration-300"
                   >
                     <CheckCircle2 className="w-5 h-5 text-[#7A1F2D] shrink-0 mt-0.5" />
                     <div>
@@ -709,27 +852,31 @@ function TemplePage() {
               </div>
             </div>
 
-            {/* Sacred Motto Quote Card */}
+            {/* Mahaprasad Banana Leaf Feature Card */}
             <div className="lg:col-span-6">
-              <div className="bg-white border-2 border-[#C58A3E]/40 rounded-3xl p-8 sm:p-11 relative shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl">
-                <span className="font-serif text-6xl text-[#C58A3E]/20 absolute top-5 left-7 leading-none">“</span>
-                <div className="relative pt-6">
-                  <p className="font-cinzel text-xl sm:text-2xl text-[#7A1F2D] font-bold leading-relaxed mb-4">
-                    वसुधैव कुटुम्बकम्
-                  </p>
-                  <blockquote className="font-serif text-lg italic text-[#1C1817] leading-relaxed">
-                    "The world is one family. True spiritual sanctuary is reflected not merely in carved stone, but in
-                    our commitment to feed the hungry, comfort the weary, and preserve timeless wisdom for tomorrow's
-                    children."
-                  </blockquote>
-
-                  <div className="mt-8 pt-5 border-t border-[#F0E8DE] flex items-center justify-between text-xs font-mono">
-                    <div>
-                      <span className="block font-bold text-[#7A1F2D] uppercase">BHTCC Constitutional Motto</span>
-                      <span className="text-[#8C8477]">Maha Upanishad VI.71-73</span>
-                    </div>
-                    <Award className="w-6 h-6 text-[#C58A3E]" />
+              <div
+                onClick={() => setLightboxImage(prasadamImage)}
+                className="bg-white border-2 border-[#C58A3E]/40 rounded-3xl p-6 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl cursor-pointer group"
+              >
+                <div className="h-64 rounded-2xl overflow-hidden relative mb-5">
+                  <img
+                    src={prasadamImage}
+                    alt="Annadhanam Mahaprasad Feast on fresh banana leaf"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-mono font-bold text-[#7A1F2D]">
+                    Free Community Annadhanam
                   </div>
+                </div>
+
+                <p className="font-cinzel text-xl text-[#7A1F2D] font-bold mb-2">अन्नं परब्रह्म स्वरूपम्</p>
+                <p className="font-serif italic text-sm text-[#1C1817] leading-relaxed">
+                  "Food is the supreme manifestation of the divine. Sharing sanctified meals breaks all social barriers
+                  and unites our multicultural regional family."
+                </p>
+                <div className="mt-4 pt-3 border-t border-[#F0E8DE] flex items-center justify-between text-xs font-mono text-[#8C8477]">
+                  <span>Saturday Community Annadhanam</span>
+                  <span className="text-[#7A1F2D] font-bold">110 Vaggs Rd Kitchen →</span>
                 </div>
               </div>
             </div>
@@ -737,7 +884,7 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 8. SITING & ACCESS: 110 VAGGS RD */}
+      {/* 9. SITING & ACCESS: 110 VAGGS RD */}
       <section id="location" className="py-20 bg-[#F5EFE6] border-y border-[#E8DFD3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -839,7 +986,7 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 9. TRANSPARENT GIVING & BUILDING FUND (EFT DETAILS WITH COPIER) */}
+      {/* 10. TRANSPARENT GIVING & BUILDING FUND */}
       <section id="fund" className="py-20 bg-[#FAF8F5]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white border-2 border-[#7A1F2D]/20 rounded-3xl p-8 sm:p-12 shadow-xl shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-2xl hover:border-[#7A1F2D]/40 text-center">
@@ -854,7 +1001,6 @@ function TemplePage() {
               Ballarat Hindu Temple construction via direct bank transfer (EFT).
             </p>
 
-            {/* Dedication Tiers with Rounded Buttons & Hover */}
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {[108, 251, 501, 1008].map((amt) => (
                 <button
@@ -872,7 +1018,6 @@ function TemplePage() {
               ))}
             </div>
 
-            {/* Bank Transfer Details with 1-Click Copy */}
             <div className="mt-8 bg-[#FAF8F5] border border-[#E5DACD] rounded-2xl p-6 max-w-lg mx-auto text-left space-y-3.5 text-xs sm:text-sm font-mono shadow-inner">
               <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
                 <span className="text-[#8C8477]">Account Name:</span>
@@ -883,7 +1028,6 @@ function TemplePage() {
                 <span className="font-semibold text-[#1C1817]">Commonwealth Bank</span>
               </div>
 
-              {/* BSB with Copy Button */}
               <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
                 <span className="text-[#8C8477]">BSB:</span>
                 <div className="flex items-center gap-2">
@@ -899,7 +1043,6 @@ function TemplePage() {
                 </div>
               </div>
 
-              {/* Account Number with Copy Button */}
               <div className="flex justify-between items-center border-b border-[#EAE1D5] pb-2.5">
                 <span className="text-[#8C8477]">Account No:</span>
                 <div className="flex items-center gap-2">
@@ -929,7 +1072,7 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 10. FREQUENTLY ASKED QUESTIONS (ROUNDED ACCORDIONS) */}
+      {/* 11. FREQUENTLY ASKED QUESTIONS */}
       <section className="py-20 bg-[#F5EFE6] border-t border-[#E8DFD3]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -983,32 +1126,32 @@ function TemplePage() {
         </div>
       </section>
 
-      {/* 11. HIGH RESOLUTION LIGHTBOX MODAL */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+      {/* 12. FULLSCREEN LIGHTBOX MODAL */}
+      {lightboxImage && (
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
           <button
             type="button"
-            onClick={() => setLightboxOpen(false)}
+            onClick={() => setLightboxImage(null)}
             className="absolute top-6 right-6 text-white hover:text-[#D4A359] p-2 focus:outline-none rounded-full bg-white/10 hover:bg-white/20 transition-all hover:scale-110"
             aria-label="Close lightbox"
           >
-            <X className="w-7 h-7" />
+            <X className="w-8 h-8" />
           </button>
           <div className="max-w-6xl w-full">
             <img
-              src={templeHeroImage}
-              alt="Full resolution architectural concept rendering for Ballarat Hindu Temple and Cultural Centre"
+              src={lightboxImage}
+              alt="Full resolution inspection view"
               className="w-full max-h-[85vh] object-contain rounded-3xl border border-white/20 shadow-2xl"
             />
             <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-white/90 bg-black/60 px-6 py-3 rounded-full backdrop-blur-md">
-              <span>BALLARAT HINDU TEMPLE & CULTURAL CENTRE • CONCEPT VISUALIZATION</span>
+              <span>BALLARAT HINDU TEMPLE & CULTURAL CENTRE • ASSET INSPECTOR</span>
               <span className="text-[#D4A359] font-bold">110 VAGGS RD, ROSS CREEK VIC 3351</span>
             </div>
           </div>
         </div>
       )}
 
-      {/* 12. REVERENT LIGHT FOOTER */}
+      {/* 13. REVERENT FOOTER */}
       <footer className="bg-[#1C1817] text-[#FAF8F5] pt-16 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center pb-12 border-b border-white/10 max-w-2xl mx-auto">
@@ -1050,6 +1193,11 @@ function TemplePage() {
                   </a>
                 </li>
                 <li>
+                  <a href="#gallery" className="hover:text-[#D4A359] transition-colors">
+                    Heritage Gallery
+                  </a>
+                </li>
+                <li>
                   <a href="#explorer" className="hover:text-[#D4A359] transition-colors">
                     Architectural Explorer
                   </a>
@@ -1057,11 +1205,6 @@ function TemplePage() {
                 <li>
                   <a href="#sanctum" className="hover:text-[#D4A359] transition-colors">
                     Consecrated Sanctum
-                  </a>
-                </li>
-                <li>
-                  <a href="#milestones" className="hover:text-[#D4A359] transition-colors">
-                    Historical Timeline
                   </a>
                 </li>
                 <li>
