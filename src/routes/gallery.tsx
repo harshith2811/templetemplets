@@ -19,6 +19,13 @@ import {
   Building,
   Heart,
   Trees,
+  MessageCircle,
+  Bookmark,
+  Share2,
+  LayoutGrid,
+  Columns,
+  Grid,
+  CheckCircle2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/gallery")({
@@ -27,6 +34,31 @@ export const Route = createFileRoute("/gallery")({
 
 function GalleryPage() {
   const [filter, setFilter] = useState<string>("all");
+  const [galleryLayout, setGalleryLayout] = useState<"insta-grid" | "insta-split" | "journal">("insta-grid");
+  const [likedItems, setLikedItems] = useState<Record<string, boolean>>({
+    g2: true,
+    g3: true,
+  });
+  const [bookmarkedItems, setBookmarkedItems] = useState<Record<string, boolean>>({});
+  const [copiedShare, setCopiedShare] = useState<string | null>(null);
+
+  const toggleLike = (id: string) => {
+    setLikedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const toggleBookmark = (id: string) => {
+    setBookmarkedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const copyShareLink = (title: string) => {
+    if (typeof navigator !== "undefined") {
+      navigator.clipboard.writeText(
+        `Ballarat Hindu Temple & Cultural Centre - ${title} (110 Vaggs Rd, Ross Creek VIC)`
+      );
+      setCopiedShare(title);
+      setTimeout(() => setCopiedShare(null), 2500);
+    }
+  };
   const [activeItem, setActiveItem] = useState<{
     id: string;
     title: string;
@@ -150,74 +182,366 @@ function GalleryPage() {
         </div>
       </div>
 
-      {/* Filter Buttons & Gallery Grid */}
-      <section className="py-12 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-            {[
-              { id: "all", label: "All Works" },
-              { id: "architecture", label: "Masterplan Concept" },
-              { id: "deities", label: "Sanctum Deities" },
-              { id: "traditions", label: "Sacred Traditions" },
-              { id: "community", label: "Annadhanam Seva" },
-              { id: "landscape", label: "5-Acre Parkland" },
-            ].map((tab) => (
+      {/* Filter Buttons & Layout Switcher */}
+      <section className="py-10 sm:py-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-[#E5DACD]">
+            {/* Category Filter Pills */}
+            <div className="flex overflow-x-auto sm:flex-wrap items-center gap-1.5 sm:gap-2 max-w-full pb-2 sm:pb-0 -mx-3 px-3 sm:mx-0 sm:px-0">
+              {[
+                { id: "all", label: "All Works" },
+                { id: "architecture", label: "Architecture" },
+                { id: "deities", label: "Sanctum Deities" },
+                { id: "traditions", label: "Traditions" },
+                { id: "community", label: "Annadhanam" },
+                { id: "landscape", label: "5-Acre Parkland" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setFilter(tab.id)}
+                  className={`shrink-0 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider transition-all ${
+                    filter === tab.id
+                      ? "bg-[#7A1F2D] text-white shadow-md scale-105 font-bold"
+                      : "bg-white text-[#554D46] border border-[#E5DACD] hover:bg-[#F3ECE2]"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-[#E5DACD] shrink-0">
               <button
-                key={tab.id}
-                onClick={() => setFilter(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
-                  filter === tab.id
-                    ? "bg-[#7A1F2D] text-white shadow-md scale-105"
-                    : "bg-white text-[#554D46] border border-[#E5DACD] hover:bg-[#F3ECE2]"
+                type="button"
+                onClick={() => setGalleryLayout("insta-grid")}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-mono transition-all ${
+                  galleryLayout === "insta-grid"
+                    ? "bg-[#7A1F2D] text-white font-bold shadow-xs"
+                    : "text-[#554D46] hover:text-[#1C1817]"
                 }`}
+                title="Side-by-side Instagram Post Grid (2-up on mobile)"
               >
-                {tab.label}
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Insta Grid</span>
               </button>
-            ))}
+              <button
+                type="button"
+                onClick={() => setGalleryLayout("insta-split")}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-mono transition-all ${
+                  galleryLayout === "insta-split"
+                    ? "bg-[#7A1F2D] text-white font-bold shadow-xs"
+                    : "text-[#554D46] hover:text-[#1C1817]"
+                }`}
+                title="Side-by-side Split View"
+              >
+                <Columns className="w-3.5 h-3.5" />
+                <span>Side-by-Side</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setGalleryLayout("journal")}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-mono transition-all ${
+                  galleryLayout === "journal"
+                    ? "bg-[#7A1F2D] text-white font-bold shadow-xs"
+                    : "text-[#554D46] hover:text-[#1C1817]"
+                }`}
+                title="Editorial Journal View"
+              >
+                <Grid className="w-3.5 h-3.5" />
+                <span>Journal</span>
+              </button>
+            </div>
           </div>
 
-          {/* Grid of Visual Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => setActiveItem(item)}
-                className="group cursor-pointer bg-white rounded-3xl overflow-hidden border border-[#E5DACD] shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex flex-col"
-              >
-                <div className="relative h-64 sm:h-72 overflow-hidden bg-[#F3ECE2]">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 text-[#1C1817] text-xs font-mono font-medium shadow-md">
-                      <Maximize2 className="w-3.5 h-3.5 text-[#7A1F2D]" />
-                      Expand View
+          {/* LAYOUT 1: SIDE-BY-SIDE INSTAGRAM GRID (2-UP ON MOBILE) */}
+          {galleryLayout === "insta-grid" && (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
+              {filteredItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="group bg-white rounded-2xl sm:rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* Top Header */}
+                  <div className="p-2 sm:p-2.5 flex items-center justify-between border-b border-[#F3ECE2] bg-[#FAF8F5]/80">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-[#7A1F2D] to-[#5E1521] text-[#C49A45] flex items-center justify-center font-serif text-[10px] sm:text-xs shrink-0 shadow-xs border border-[#C49A45]/30">
+                        ॐ
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] sm:text-[11px] font-mono font-bold text-[#1C1817] truncate leading-tight flex items-center gap-1">
+                          <span className="truncate">bhtcc.sanctuary</span>
+                          <span className="text-[#C49A45] text-[9px] shrink-0">✦</span>
+                        </div>
+                        <div className="text-[8px] sm:text-[9px] font-mono text-[#554D46] truncate">
+                          Ross Creek VIC
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[8px] sm:text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-full bg-[#F3ECE2] text-[#7A1F2D] font-bold shrink-0">
+                      {item.tag}
                     </span>
                   </div>
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#7A1F2D] font-mono text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                    {item.tag}
-                  </div>
-                </div>
 
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-[#554D46] mt-2 line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
+                  {/* Square Aspect Image */}
+                  <div
+                    onClick={() => setActiveItem(item)}
+                    className="relative aspect-square w-full overflow-hidden bg-stone-100 cursor-pointer"
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="px-2.5 py-1 rounded-full bg-white/95 text-[#1C1817] text-[10px] font-mono font-bold flex items-center gap-1 shadow-md">
+                        <Maximize2 className="w-3 h-3 text-[#7A1F2D]" />
+                        Expand
+                      </span>
+                    </div>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-[#F3ECE2] text-[10px] font-mono text-[#7A1F2D]">
-                    {item.provenance}
+
+                  {/* Insta Action Row */}
+                  <div className="px-2.5 pt-2 pb-1 sm:px-3 sm:pt-2.5 flex items-center justify-between">
+                    <div className="flex items-center gap-2 sm:gap-2.5 text-[#1C1817]">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleLike(item.id);
+                        }}
+                        className="transition-transform active:scale-125 focus:outline-none"
+                        title="Offer Reverence"
+                      >
+                        <Heart
+                          className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-colors ${
+                            likedItems[item.id] ? "text-rose-600 fill-rose-600" : "text-[#1C1817] hover:text-rose-600"
+                          }`}
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveItem(item);
+                        }}
+                        className="text-[#1C1817] hover:text-[#7A1F2D] transition-colors focus:outline-none"
+                        title="Inspect Details"
+                      >
+                        <MessageCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyShareLink(item.title);
+                        }}
+                        className="text-[#1C1817] hover:text-[#7A1F2D] transition-colors focus:outline-none"
+                        title="Share Asset"
+                      >
+                        <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleBookmark(item.id);
+                      }}
+                      className="transition-transform active:scale-110 focus:outline-none"
+                      title="Bookmark"
+                    >
+                      <Bookmark
+                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
+                          bookmarkedItems[item.id] ? "text-[#C49A45] fill-[#C49A45]" : "text-[#554D46] hover:text-[#1C1817]"
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Caption & Metadata */}
+                  <div className="px-2.5 pb-2.5 sm:px-3 sm:pb-3 flex-1 flex flex-col justify-between text-left">
+                    <div>
+                      <div className="text-[10px] sm:text-[11px] font-mono font-bold text-[#7A1F2D]">
+                        {108 + (likedItems[item.id] ? 1 : 0)} darshans
+                      </div>
+                      <h3 className="font-serif font-bold text-xs sm:text-sm text-[#1C1817] leading-tight line-clamp-1 mt-0.5 group-hover:text-[#7A1F2D] transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-[10px] sm:text-xs text-[#554D46] leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
+                      <div className="mt-1 text-[8px] sm:text-[9px] font-mono text-[#7A1F2D]/80 truncate">
+                        #bhtcc #sanctuary #rosscreek
+                      </div>
+                    </div>
+                    <div
+                      onClick={() => setActiveItem(item)}
+                      className="mt-2 pt-1.5 border-t border-[#F3ECE2] flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-[#8C8477] cursor-pointer"
+                    >
+                      <span>Authentic Asset</span>
+                      <span className="text-[#7A1F2D] font-bold group-hover:translate-x-0.5 transition-transform">
+                        View →
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {/* LAYOUT 2: SIDE-BY-SIDE SPLIT VIEW */}
+          {galleryLayout === "insta-split" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              {filteredItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="group bg-white rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col sm:flex-row"
+                >
+                  <div
+                    onClick={() => setActiveItem(item)}
+                    className="w-full sm:w-1/2 aspect-square sm:aspect-auto sm:min-h-[250px] relative overflow-hidden bg-stone-100 cursor-pointer shrink-0"
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold text-[#7A1F2D] shadow-xs">
+                      {item.tag}
+                    </div>
+                  </div>
+
+                  <div className="w-full sm:w-1/2 p-4 sm:p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between pb-3 border-b border-[#F3ECE2]">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-[#7A1F2D] text-[#C49A45] flex items-center justify-center font-serif text-xs border border-[#C49A45]/30">
+                            ॐ
+                          </div>
+                          <div>
+                            <div className="text-xs font-mono font-bold text-[#1C1817]">bhtcc.sanctuary</div>
+                            <div className="text-[10px] font-mono text-[#554D46]">110 Vaggs Rd, Ross Creek</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="py-3 space-y-1.5">
+                        <h3 className="font-serif font-bold text-base text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-[#554D46] leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="pt-3 border-t border-[#F3ECE2] flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => toggleLike(item.id)}
+                            className="transition-transform active:scale-125 focus:outline-none"
+                            title="Offer Reverence"
+                          >
+                            <Heart
+                              className={`w-4 h-4 transition-colors ${
+                                likedItems[item.id] ? "text-rose-600 fill-rose-600" : "text-[#1C1817] hover:text-rose-600"
+                              }`}
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setActiveItem(item)}
+                            className="text-[#1C1817] hover:text-[#7A1F2D]"
+                            title="View Details"
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => copyShareLink(item.title)}
+                            className="text-[#1C1817] hover:text-[#7A1F2D]"
+                            title="Share Link"
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => toggleBookmark(item.id)}
+                          className="text-[#554D46] hover:text-[#1C1817]"
+                          title="Bookmark"
+                        >
+                          <Bookmark
+                            className={`w-4 h-4 ${
+                              bookmarkedItems[item.id] ? "text-[#C49A45] fill-[#C49A45]" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
+                      <div className="mt-2 text-[10px] font-mono text-[#7A1F2D] font-bold">
+                        {108 + (likedItems[item.id] ? 1 : 0)} darshans
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {/* LAYOUT 3: EDITORIAL JOURNAL CARDS */}
+          {galleryLayout === "journal" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveItem(item)}
+                  className="group cursor-pointer bg-white rounded-3xl overflow-hidden border border-[#E5DACD] shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex flex-col"
+                >
+                  <div className="relative h-64 sm:h-72 overflow-hidden bg-[#F3ECE2]">
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 text-[#1C1817] text-xs font-mono font-medium shadow-md">
+                        <Maximize2 className="w-3.5 h-3.5 text-[#7A1F2D]" />
+                        Expand View
+                      </span>
+                    </div>
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#7A1F2D] font-mono text-[10px] font-bold uppercase tracking-wider shadow-sm">
+                      {item.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-[#1C1817] group-hover:text-[#7A1F2D] transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-[#554D46] mt-2 line-clamp-2 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-[#F3ECE2] text-[10px] font-mono text-[#7A1F2D]">
+                      {item.provenance}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {/* Toast Notification */}
+          {copiedShare && (
+            <div className="fixed bottom-6 right-6 z-50 bg-[#1C1817] text-[#FAF8F5] px-4 py-2.5 rounded-full shadow-2xl text-xs font-mono border border-[#C49A45]/40 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span>Copied share details: {copiedShare}</span>
+            </div>
+          )}
         </div>
       </section>
 
