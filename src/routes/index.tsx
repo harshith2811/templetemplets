@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { SiteNavigation } from "@/components/SiteNavigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import templeHeroImage from "@/assets/bhtcc-vision-concept.jpg";
 import brassLampImage from "@/assets/temple-brass-lamp.jpg";
 import ganeshaImage from "@/assets/sanctum-ganesha.jpg";
@@ -312,118 +314,8 @@ function TemplePage() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#1C1817] font-sans-body selection:bg-[#7A1F2D]/20 selection:text-[#7A1F2D]">
-      {/* 1. TOP NOTICE RIBBON */}
-      <div className="bg-[#F3ECE2] border-b border-[#E5DACD] text-[#6E645A] px-3 sm:px-4 py-2 text-[10px] sm:text-[11px] font-mono tracking-wider sm:tracking-widest uppercase">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1.5 sm:gap-2 text-center md:text-left">
-          <div className="flex items-center gap-2 justify-center">
-            <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#C58A3E] animate-pulse shadow-sm shrink-0" />
-            <span className="font-semibold text-[#1C1817] truncate">
-              BHTCC SACRED ARCHITECTURAL JOURNAL • 110 VAGGS RD, ROSS CREEK
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[#7A7167]">
-            <span className="hidden sm:inline">GEO: 37°38'S 143°49'E</span>
-            <span className="hidden sm:inline">•</span>
-            <span>ABN: 13 397 829 440</span>
-            <span>•</span>
-            <span className="text-[#7A1F2D] font-bold">GOVT GRANT: $900K+</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. ADAPTIVE RESPONSIVE NAVIGATION BAR */}
-      <header className="sticky top-2 sm:top-3 z-40 px-3 sm:px-6 lg:px-8 my-1.5 sm:my-2">
-        <div className="max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-[#E8DFD3] rounded-full px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between shadow-lg shadow-[#7A1F2D]/5 transition-all duration-300 hover:shadow-xl hover:border-[#7A1F2D]/30">
-          {/* Logo & Brand Emblem */}
-          <a href="#" className="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
-            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#7A1F2D] border-2 border-[#D4A359]/60 flex items-center justify-center text-[#FAF8F5] shadow-md transition-all duration-300 group-hover:scale-105">
-              <span className="font-cinzel text-base sm:text-xl font-bold">ॐ</span>
-            </div>
-            <div>
-              <span className="block font-cinzel text-xs sm:text-base md:text-lg font-bold tracking-wider text-[#7A1F2D] leading-tight transition-colors group-hover:text-[#5E1521]">
-                BALLARAT HINDU TEMPLE
-              </span>
-              <span className="block text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-[#8C8477]">
-                & Cultural Centre • Victoria
-              </span>
-            </div>
-          </a>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#5C534B]">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-full px-3.5 py-1.5 transition-all duration-200 hover:bg-[#7A1F2D]/10 hover:text-[#7A1F2D] hover:scale-105"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Actions & Mobile Menu Toggle */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Chime Bell Button */}
-            <button
-              type="button"
-              onClick={playTempleBell}
-              title="Ring Temple Bell (Web Audio Chime)"
-              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border transition-all duration-300 text-xs font-mono flex items-center gap-1.5 sm:gap-2 shadow-sm ${
-                bellRinging
-                  ? "bg-[#7A1F2D] text-white border-[#7A1F2D] scale-105 shadow-md"
-                  : "bg-[#F3ECE2] hover:bg-[#EAE1D4] text-[#7A1F2D] border-[#DED4C7] hover:scale-105"
-              }`}
-            >
-              <Volume2 className={`w-3.5 h-3.5 ${bellRinging ? "animate-bounce" : ""}`} />
-              <span className="hidden sm:inline">Ring Bell</span>
-            </button>
-
-            {/* Temple Fund CTA */}
-            <a
-              href="#fund"
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#7A1F2D] hover:bg-[#5E1521] text-[#FAF8F5] px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#7A1F2D]/25 hover:scale-105 shrink-0"
-            >
-              <Heart className="w-3.5 h-3.5 text-[#D4A359]" />
-              <span className="hidden xs:inline">Fund</span>
-            </a>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full text-[#1C1817] hover:bg-[#F3ECE2] border border-[#E5DACD] transition-colors focus:outline-none"
-              aria-label="Toggle Navigation Menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-[#7A1F2D]" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Dropdown Sheet */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-white/98 backdrop-blur-2xl border border-[#E8DFD3] rounded-3xl p-5 shadow-2xl transition-all animate-in fade-in slide-in-from-top-3 duration-200">
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono uppercase tracking-wider">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="bg-[#FAF8F5] hover:bg-[#F3ECE2] text-[#1C1817] hover:text-[#7A1F2D] px-4 py-3 rounded-2xl border border-[#EAE1D5] flex items-center justify-between transition-colors"
-                >
-                  <span>{link.label}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#C58A3E]" />
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-[#EAE1D5] flex items-center justify-between text-xs font-mono text-[#7A7167]">
-              <span>110 Vaggs Rd, Ross Creek VIC</span>
-              <span className="text-[#7A1F2D] font-bold">ABN: 13 397 829 440</span>
-            </div>
-          </div>
-        )}
-      </header>
+      {/* SHARED SITE NAVIGATION */}
+      <SiteNavigation />
 
       {/* 3. HERO VIEWPORT: ADAPTIVE ON EVERY MOBILE & DESKTOP SCREEN */}
       <section
@@ -1188,76 +1080,8 @@ function TemplePage() {
         </div>
       )}
 
-      {/* 13. REVERENT FOOTER */}
-      <footer className="bg-[#1C1817] text-[#FAF8F5] pt-12 sm:pt-16 pb-10 sm:pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center pb-8 sm:pb-12 border-b border-white/10 max-w-2xl mx-auto">
-            <p className="font-cinzel text-base sm:text-xl md:text-2xl text-[#D4A359] tracking-widest font-semibold">
-              ॐ सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः ।
-            </p>
-            <p className="mt-2 text-[11px] sm:text-xs text-[#A89F91] italic font-serif">
-              "May all beings everywhere be peaceful, happy, and free from discord."
-            </p>
-          </div>
-
-          <div className="py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-xs font-mono text-[#A89F91]">
-            <div className="sm:col-span-2">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#7A1F2D] text-[#D4A359] flex items-center justify-center border border-[#D4A359]/40 shadow-sm shrink-0">
-                  <span className="font-cinzel text-base font-bold">ॐ</span>
-                </div>
-                <span className="font-cinzel text-xs sm:text-sm font-bold tracking-wider text-[#FAF8F5]">
-                  BALLARAT HINDU TEMPLE & CULTURAL CENTRE
-                </span>
-              </div>
-              <p className="text-xs text-[#A89F91] leading-relaxed max-w-md">
-                An incorporated Victorian charity (ABN: 13 397 829 440) dedicated to establishing regional Victoria's
-                first traditional Vedic stone temple, community food welfare kitchen, and cultural academy on 5 acres.
-              </p>
-              <div className="mt-3 text-[11px] text-[#D4A359]">
-                110 Vaggs Rd, Ross Creek VIC 3351 | Golden Plains Shire
-              </div>
-            </div>
-
-            <div>
-              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-2.5 sm:mb-3">
-                // Quick Navigation
-              </span>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <a href={link.href} className="hover:text-[#D4A359] transition-colors py-0.5 inline-block">
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <span className="block font-semibold uppercase tracking-wider text-[#FAF8F5] mb-2.5 sm:mb-3">
-                // Governance & Fund
-              </span>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs">
-                <li>ABN: 13 397 829 440</li>
-                <li>Victoria Reg: A0096238K</li>
-                <li>info@ballarathindutemple.org.au</li>
-                <li>+61 3 5300 0000</li>
-                <li className="pt-2 text-[#D4A359]">
-                  <a href="#fund" className="hover:underline">
-                    Support the Building Fund →
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono text-[#8C8477] text-center sm:text-left">
-            <p>© {new Date().getFullYear()} Ballarat Hindu Temple & Cultural Centre Inc. All rights reserved.</p>
-            <p>Designed under Vedic Vastu Shastra principles for Western Regional Victoria.</p>
-          </div>
-        </div>
-      </footer>
+      {/* SHARED REVERENT FOOTER */}
+      <SiteFooter />
     </div>
   );
 }

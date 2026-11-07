@@ -15,20 +15,20 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-4 font-sans text-[#231F20]">
-      <div className="max-w-md text-center">
-        <span className="font-serif text-xs font-bold uppercase tracking-widest text-[#7A1F2D]">
+    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-4 font-sans text-[#1C1817]">
+      <div className="max-w-md text-center bg-white border border-[#E5DACD] rounded-3xl p-8 shadow-xl">
+        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#7A1F2D]">
           BHTCC • Ballarat Hindu Temple
         </span>
-        <h1 className="mt-2 text-7xl font-bold font-serif text-[#7A1F2D]">404</h1>
-        <h2 className="mt-4 text-2xl font-serif font-semibold text-[#231F20]">Sacred Space Not Found</h2>
-        <p className="mt-3 text-sm text-[#5C554E] leading-relaxed">
-          The page or sanctuary section you are seeking does not exist or has been relocated within the masterplan.
+        <h1 className="mt-2 text-6xl font-bold font-serif text-[#7A1F2D]">404</h1>
+        <h2 className="mt-4 text-2xl font-serif font-semibold text-[#1C1817]">Sacred Space Not Found</h2>
+        <p className="mt-3 text-xs sm:text-sm text-[#554D46] leading-relaxed">
+          The sanctuary section you are seeking does not exist or has been relocated within the masterplan.
         </p>
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-none border border-[#7A1F2D] bg-[#7A1F2D] px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-[#FAF8F5] transition-all hover:bg-[#5E1521]"
+            className="inline-flex items-center justify-center rounded-full bg-[#7A1F2D] hover:bg-[#5E1521] px-6 py-2.5 text-xs font-mono font-semibold uppercase tracking-widest text-[#FAF8F5] transition-all shadow-md hover:scale-105"
           >
             Return to Sanctuary Home
           </Link>
@@ -46,13 +46,13 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-4 text-[#231F20]">
-      <div className="max-w-md text-center">
+    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-4 text-[#1C1817]">
+      <div className="max-w-md text-center bg-white border border-[#E5DACD] rounded-3xl p-8 shadow-xl">
         <h1 className="text-xl font-serif font-semibold tracking-tight text-[#7A1F2D]">
           Temple Experience Temporarily Unavailable
         </h1>
-        <p className="mt-2 text-sm text-[#5C554E]">
-          Something unexpected occurred while presenting this sanctuary section. Please refresh or return to the main hall.
+        <p className="mt-2 text-xs sm:text-sm text-[#554D46]">
+          Something unexpected occurred while presenting this section. Please refresh or return to the main hall.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
@@ -60,13 +60,13 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center border border-[#7A1F2D] bg-[#7A1F2D] px-5 py-2 text-xs font-semibold uppercase tracking-widest text-[#FAF8F5] transition-colors hover:bg-[#5E1521]"
+            className="inline-flex items-center justify-center rounded-full bg-[#7A1F2D] hover:bg-[#5E1521] px-5 py-2 text-xs font-mono font-semibold uppercase tracking-widest text-[#FAF8F5] transition-all hover:scale-105"
           >
             Reload Page
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center border border-[#C5BBAF] bg-[#FAF8F5] px-5 py-2 text-xs font-semibold uppercase tracking-widest text-[#231F20] transition-colors hover:bg-[#F3EFE9]"
+            className="inline-flex items-center justify-center rounded-full border border-[#DED4C7] bg-[#FAF8F5] hover:bg-[#F3ECE2] px-5 py-2 text-xs font-mono font-semibold uppercase tracking-widest text-[#1C1817] transition-all hover:scale-105"
           >
             Go Home
           </a>
@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap",
       },
       {
         rel: "stylesheet",
@@ -123,7 +123,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-[#FAF8F5] text-[#231F20] antialiased selection:bg-[#7A1F2D]/15 selection:text-[#7A1F2D]">
+      <body className="bg-[#FAF8F5] text-[#1C1817] antialiased selection:bg-[#7A1F2D]/20 selection:text-[#7A1F2D]">
         {children}
         <Scripts />
       </body>
