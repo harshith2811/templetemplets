@@ -17,15 +17,10 @@ import {
   Layers,
   Sparkles,
   Building,
-  Heart,
   Trees,
-  MessageCircle,
-  Bookmark,
-  Share2,
   LayoutGrid,
   Columns,
   Grid,
-  CheckCircle2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/gallery")({
@@ -35,30 +30,6 @@ export const Route = createFileRoute("/gallery")({
 function GalleryPage() {
   const [filter, setFilter] = useState<string>("all");
   const [galleryLayout, setGalleryLayout] = useState<"insta-grid" | "insta-split" | "journal">("insta-grid");
-  const [likedItems, setLikedItems] = useState<Record<string, boolean>>({
-    g2: true,
-    g3: true,
-  });
-  const [bookmarkedItems, setBookmarkedItems] = useState<Record<string, boolean>>({});
-  const [copiedShare, setCopiedShare] = useState<string | null>(null);
-
-  const toggleLike = (id: string) => {
-    setLikedItems((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const toggleBookmark = (id: string) => {
-    setBookmarkedItems((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const copyShareLink = (title: string) => {
-    if (typeof navigator !== "undefined") {
-      navigator.clipboard.writeText(
-        `Ballarat Hindu Temple & Cultural Centre - ${title} (110 Vaggs Rd, Ross Creek VIC)`
-      );
-      setCopiedShare(title);
-      setTimeout(() => setCopiedShare(null), 2500);
-    }
-  };
   const [activeItem, setActiveItem] = useState<{
     id: string;
     title: string;
@@ -254,13 +225,14 @@ function GalleryPage() {
             </div>
           </div>
 
-          {/* LAYOUT 1: SIDE-BY-SIDE INSTAGRAM GRID (2-UP ON MOBILE) */}
+          {/* LAYOUT 1: SIDE-BY-SIDE GRID (2-UP ON MOBILE) */}
           {galleryLayout === "insta-grid" && (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
               {filteredItems.map((item) => (
                 <article
                   key={item.id}
-                  className="group bg-white rounded-2xl sm:rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col justify-between"
+                  onClick={() => setActiveItem(item)}
+                  className="group bg-white rounded-2xl sm:rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col justify-between cursor-pointer"
                 >
                   {/* Top Header */}
                   <div className="p-2 sm:p-2.5 flex items-center justify-between border-b border-[#F3ECE2] bg-[#FAF8F5]/80">
@@ -284,10 +256,7 @@ function GalleryPage() {
                   </div>
 
                   {/* Square Aspect Image */}
-                  <div
-                    onClick={() => setActiveItem(item)}
-                    className="relative aspect-square w-full overflow-hidden bg-stone-100 cursor-pointer"
-                  >
+                  <div className="relative aspect-square w-full overflow-hidden bg-stone-100">
                     <img
                       src={item.src}
                       alt={item.title}
@@ -301,85 +270,18 @@ function GalleryPage() {
                     </div>
                   </div>
 
-                  {/* Insta Action Row */}
-                  <div className="px-2.5 pt-2 pb-1 sm:px-3 sm:pt-2.5 flex items-center justify-between">
-                    <div className="flex items-center gap-2 sm:gap-2.5 text-[#1C1817]">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleLike(item.id);
-                        }}
-                        className="transition-transform active:scale-125 focus:outline-none"
-                        title="Offer Reverence"
-                      >
-                        <Heart
-                          className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-colors ${
-                            likedItems[item.id] ? "text-rose-600 fill-rose-600" : "text-[#1C1817] hover:text-rose-600"
-                          }`}
-                        />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveItem(item);
-                        }}
-                        className="text-[#1C1817] hover:text-[#7A1F2D] transition-colors focus:outline-none"
-                        title="Inspect Details"
-                      >
-                        <MessageCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          copyShareLink(item.title);
-                        }}
-                        className="text-[#1C1817] hover:text-[#7A1F2D] transition-colors focus:outline-none"
-                        title="Share Asset"
-                      >
-                        <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      </button>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleBookmark(item.id);
-                      }}
-                      className="transition-transform active:scale-110 focus:outline-none"
-                      title="Bookmark"
-                    >
-                      <Bookmark
-                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
-                          bookmarkedItems[item.id] ? "text-[#C49A45] fill-[#C49A45]" : "text-[#554D46] hover:text-[#1C1817]"
-                        }`}
-                      />
-                    </button>
-                  </div>
-
                   {/* Caption & Metadata */}
-                  <div className="px-2.5 pb-2.5 sm:px-3 sm:pb-3 flex-1 flex flex-col justify-between text-left">
+                  <div className="p-2.5 sm:p-3 flex-1 flex flex-col justify-between text-left">
                     <div>
-                      <div className="text-[10px] sm:text-[11px] font-mono font-bold text-[#7A1F2D]">
-                        {108 + (likedItems[item.id] ? 1 : 0)} darshans
-                      </div>
-                      <h3 className="font-serif font-bold text-xs sm:text-sm text-[#1C1817] leading-tight line-clamp-1 mt-0.5 group-hover:text-[#7A1F2D] transition-colors">
+                      <h3 className="font-serif font-bold text-xs sm:text-sm text-[#1C1817] leading-tight line-clamp-1 group-hover:text-[#7A1F2D] transition-colors">
                         {item.title}
                       </h3>
                       <p className="mt-1 text-[10px] sm:text-xs text-[#554D46] leading-relaxed line-clamp-2">
                         {item.description}
                       </p>
-                      <div className="mt-1 text-[8px] sm:text-[9px] font-mono text-[#7A1F2D]/80 truncate">
-                        #bhtcc #sanctuary #rosscreek
-                      </div>
                     </div>
-                    <div
-                      onClick={() => setActiveItem(item)}
-                      className="mt-2 pt-1.5 border-t border-[#F3ECE2] flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-[#8C8477] cursor-pointer"
-                    >
-                      <span>Authentic Asset</span>
+                    <div className="mt-2.5 pt-1.5 border-t border-[#F3ECE2] flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-[#8C8477]">
+                      <span>BHTCC Asset</span>
                       <span className="text-[#7A1F2D] font-bold group-hover:translate-x-0.5 transition-transform">
                         View →
                       </span>
@@ -396,12 +298,10 @@ function GalleryPage() {
               {filteredItems.map((item) => (
                 <article
                   key={item.id}
-                  className="group bg-white rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col sm:flex-row"
+                  onClick={() => setActiveItem(item)}
+                  className="group bg-white rounded-3xl border border-[#E5DACD] overflow-hidden shadow-xs hover:shadow-xl hover:border-[#7A1F2D]/50 transition-all duration-300 flex flex-col sm:flex-row cursor-pointer"
                 >
-                  <div
-                    onClick={() => setActiveItem(item)}
-                    className="w-full sm:w-1/2 aspect-square sm:aspect-auto sm:min-h-[250px] relative overflow-hidden bg-stone-100 cursor-pointer shrink-0"
-                  >
+                  <div className="w-full sm:w-1/2 aspect-square sm:aspect-auto sm:min-h-[220px] relative overflow-hidden bg-stone-100 shrink-0">
                     <img
                       src={item.src}
                       alt={item.title}
@@ -436,54 +336,11 @@ function GalleryPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <div className="pt-3 border-t border-[#F3ECE2] flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => toggleLike(item.id)}
-                            className="transition-transform active:scale-125 focus:outline-none"
-                            title="Offer Reverence"
-                          >
-                            <Heart
-                              className={`w-4 h-4 transition-colors ${
-                                likedItems[item.id] ? "text-rose-600 fill-rose-600" : "text-[#1C1817] hover:text-rose-600"
-                              }`}
-                            />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setActiveItem(item)}
-                            className="text-[#1C1817] hover:text-[#7A1F2D]"
-                            title="View Details"
-                          >
-                            <MessageCircle className="w-4 h-4" />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => copyShareLink(item.title)}
-                            className="text-[#1C1817] hover:text-[#7A1F2D]"
-                            title="Share Link"
-                          >
-                            <Share2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => toggleBookmark(item.id)}
-                          className="text-[#554D46] hover:text-[#1C1817]"
-                          title="Bookmark"
-                        >
-                          <Bookmark
-                            className={`w-4 h-4 ${
-                              bookmarkedItems[item.id] ? "text-[#C49A45] fill-[#C49A45]" : ""
-                            }`}
-                          />
-                        </button>
-                      </div>
-                      <div className="mt-2 text-[10px] font-mono text-[#7A1F2D] font-bold">
-                        {108 + (likedItems[item.id] ? 1 : 0)} darshans
-                      </div>
+                    <div className="pt-2 border-t border-[#F3ECE2] flex items-center justify-between text-[10px] font-mono text-[#8C8477]">
+                      <span>BHTCC Asset</span>
+                      <span className="text-[#7A1F2D] font-bold group-hover:translate-x-0.5 transition-transform">
+                        View →
+                      </span>
                     </div>
                   </div>
                 </article>
@@ -535,13 +392,7 @@ function GalleryPage() {
             </div>
           )}
 
-          {/* Toast Notification */}
-          {copiedShare && (
-            <div className="fixed bottom-6 right-6 z-50 bg-[#1C1817] text-[#FAF8F5] px-4 py-2.5 rounded-full shadow-2xl text-xs font-mono border border-[#C49A45]/40 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Copied share details: {copiedShare}</span>
-            </div>
-          )}
+
         </div>
       </section>
 
